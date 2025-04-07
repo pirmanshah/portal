@@ -97,5 +97,10 @@ export default [
         route("/reports", "routes/purchasing/pur-report.tsx"),
       ]),
     ]),
+    layout("routes/logistic/logistic.layout.tsx", [
+      ...prefix("logistic", [
+        route("/bc-online", "routes/logistic/bc-online/bc-online.tsx"),
+      ]),
+    ]),
   ]),
 ] satisfies RouteConfig;

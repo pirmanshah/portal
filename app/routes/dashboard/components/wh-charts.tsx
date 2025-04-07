@@ -239,8 +239,6 @@ export function WHCharts() {
         </Stack>
       </Paper>
       <ComplaintPie />
-      <Delivery />
-      <Complaint />
     </SimpleGrid>
   );
 }
