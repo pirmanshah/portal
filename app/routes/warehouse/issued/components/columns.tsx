@@ -22,6 +22,11 @@ export function generateColumns(): MRT_ColumnDef<Issued>[] {
       filterFn: "customFilterFn",
     },
     {
+      accessorKey: "cpwi_number",
+      filterFn: "customFilterFn",
+      header: "CPWI No.",
+    },
+    {
       id: "total_count",
       filterFn: "equals",
       header: "Total Line",

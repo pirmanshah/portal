@@ -245,7 +245,7 @@ export default function CreateIssue() {
       <TitleWithArrow
         marginBottom="xs"
         title="Stock Transfer 📝"
-        handleBack={() => navigate("/warehouse/issued")}
+        handleBack={() => navigate("/weighing/issued")}
         description="Enter and verify the details of the stock transfer before saving and sending it to the TPICS system."
       />
 
