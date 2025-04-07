@@ -36,7 +36,7 @@ export function NumberCell({
       onChange={handleChange}
       value={currentValue ?? ""}
       fixedDecimalScale={fixedDecimalScale}
-      decimalScale={fixedDecimalScale ? 4 : undefined}
+      decimalScale={fixedDecimalScale ? 6 : undefined}
       styles={{
         input: { textAlign: "right" },
       }}
