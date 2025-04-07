@@ -15,7 +15,6 @@ export async function clientLoader({}: Route.ClientLoaderArgs) {
   return queryClient.fetchQuery({
     queryKey: ["user-profile"],
     queryFn: () => getProfile(),
-    staleTime: Infinity,
   });
 }
 
