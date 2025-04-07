@@ -19,6 +19,7 @@ export default [
     ...prefix("automation", [index("routes/automation/automation.tsx")]),
     layout("routes/warehouse/warehouse.layout.tsx", [
       ...prefix("warehouse", [
+        route("/inventory", "routes/warehouse/inventory/inventory-wh.tsx"),
         route("/receipt", "routes/warehouse/receipt/receipt.tsx"),
         route(
           "/receipt/:code/detail",
@@ -41,6 +42,7 @@ export default [
     ]),
     layout("routes/weighing/weighing.layout.tsx", [
       ...prefix("weighing", [
+        route("/inventory", "routes/weighing/inventory/inventory-wg.tsx"),
         ...prefix("issued", [
           index("routes/weighing/issued/weighing.issued.tsx"),
           route(
