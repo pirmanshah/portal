@@ -5,6 +5,7 @@ import { Button } from "@mantine/core";
 import { type MRT_Row } from "mantine-react-table";
 import { IconDownload } from "@tabler/icons-react";
 import type { BcOnline } from "../types/BcOnline";
+import { useBcOnlineStore } from "../hooks/use-query";
 
 interface DownloadProps {
   disabled: boolean;
@@ -12,11 +13,12 @@ interface DownloadProps {
 }
 
 export function Download({ rows, disabled = false }: DownloadProps) {
+  const { lot } = useBcOnlineStore();
   const data = rows.map((row) => row.original);
 
   const exportToExcel = async () => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet("BC Online");
+    const worksheet = workbook.addWorksheet(lot);
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 },
@@ -43,7 +45,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     worksheet.getCell("A5").value = "Export Date";
     worksheet.getCell("A5").alignment = { horizontal: "left" };
 
-    worksheet.getCell("C4").value = "BC Online Report";
+    worksheet.getCell("C4").value = lot;
     worksheet.getCell("C4").border = { bottom: { style: "thin" } };
 
     worksheet.getCell("C5").value = dayjs().format("DD MMMM YYYY");
@@ -137,7 +139,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `bc_online_${dayjs().format("YYYYMMDD_HHmmss")}.xlsx`;
+    link.download = `${lot}_${dayjs().format("YYMMDDHHmmss")}.xlsx`;
     link.click();
   };
 

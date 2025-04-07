@@ -102,5 +102,10 @@ export default [
         route("/bc-online", "routes/logistic/bc-online/bc-online.tsx"),
       ]),
     ]),
+    layout("routes/production/production.layout.tsx", [
+      ...prefix("production", [
+        route("/print-label", "routes/production/label/fg-label.tsx"),
+      ]),
+    ]),
   ]),
 ] satisfies RouteConfig;
