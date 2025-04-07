@@ -1,0 +1,29 @@
+.container {
+  font-size: 14px;
+}
+.margin {
+  margin-bottom: 60px;
+}
+
+.grid {
+  gap: 1rem;
+  display: grid;
+  text-align: left;
+  grid-template-columns: 1fr 1fr 1.9fr;
+}
+
+.sectionHeader {
+  border-bottom: 1px solid black;
+  padding-bottom: 4px;
+}
+
+.signatureLine {
+  margin-top: 1.5rem;
+  border-bottom: 1px solid black;
+  padding-top: 4px;
+}
+
+.notes {
+  font-size: 10px;
+  text-align: left;
+}

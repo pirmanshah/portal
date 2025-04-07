@@ -1,0 +1,32 @@
+name: 🚀 Deploy application on push
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: 🎉 Running deployment process
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: ⬇️ Install dependencies
+        run: npm install
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+
+      - name: 🔨 Build application
+        run: npm run build
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+
+      - name: 📂 Sync all files in build/client folder
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: build/client/
