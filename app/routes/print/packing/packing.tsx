@@ -22,7 +22,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
     return (
       <div ref={ref} style={{ padding: 0, fontFamily: "Courier New" }}>
         {rows.map((group, groupIndex) => {
-          const itemsPerPagePattern = [6, 8]; // Halaman 1: 7 items, Halaman 2: 9 items, sisanya bebas
+          const itemsPerPagePattern = [12, 12]; // Halaman 1: 7 items, Halaman 2: 9 items, sisanya bebas
           let remainingItems = group.items.slice();
           let pages: any[] = [];
           let pageIndex = 0;
@@ -146,7 +146,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                 textTransform: "uppercase",
                               }}
                             >
-                              DELIVERY ORDER
+                              Packing List
                             </h2>
                           </div>
 
@@ -163,16 +163,19 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                           }}
                         >
                           <p style={{ margin: 0, padding: 0 }}>
-                            Ship to : {group.customer_code}
+                            <strong>PL No :</strong>{" "}
+                            {group.delivery_order_number.replace("SJ", "PL")}
                           </p>
 
-                          <p style={{ margin: 0, padding: 0 }}>
-                            Order No. : {group.delivery_order_number}
-                          </p>
-                          <p style={{ margin: 0, padding: 0 }}>
-                            Date :{" "}
-                            {dayjs(group.issue_date).format("DD-MM-YYYY")}
-                          </p>
+                          <div style={{ display: "flex", gap: 20 }}>
+                            <p style={{ margin: 0, padding: 0 }}>
+                              <strong>Date :</strong>{" "}
+                              {dayjs(group.issue_date).format("DD-MM-YYYY")}
+                            </p>
+                            <p style={{ margin: 0, padding: 0 }}>
+                              <strong>Ref :</strong> {group.customer_code}
+                            </p>
+                          </div>
                         </div>
                       </>
                     )}
