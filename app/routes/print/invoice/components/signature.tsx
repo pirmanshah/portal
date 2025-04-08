@@ -42,7 +42,7 @@ export function Signature({ data }: { data: ShipmentGroup }) {
         </div>
         <div style={{ textAlign: "right" }}>
           <p style={{ margin: 0, fontWeight: "bold", paddingRight: 30 }}>
-            TOTAL USD
+            TOTAL
           </p>
           <p style={{ margin: 0, fontWeight: "bold" }}>
             <NumberFormatter
