@@ -12,9 +12,34 @@ import TopToolbar from "./toolbar";
 import { TableItem } from "./table-item";
 import { generateColumns } from "./column";
 import { TitleTable } from "#app/components/title-table";
-import type { ShipmentGroup } from "../../types/shipment";
+import type { ShipmentGroup, ShipmentItem } from "../../types/shipment";
 import { useShipmentQuery } from "../../hooks/use-shipment";
 import { createTableOptions } from "#app/utils/createTableOptions";
+
+function summarizeItems(items: ShipmentItem[]): ShipmentItem[] {
+  const summaryMap = new Map<string, ShipmentItem>();
+
+  for (const item of items) {
+    const key = `${item.order_number}-${item.item_code}`;
+
+    if (!summaryMap.has(key)) {
+      summaryMap.set(key, { ...item });
+    } else {
+      const existing = summaryMap.get(key)!;
+      summaryMap.set(key, {
+        ...existing,
+        qty_order: existing.qty_order + item.qty_order,
+        qty_delivery: existing.qty_delivery + item.qty_delivery,
+        qty_back_order: existing.qty_back_order + item.qty_back_order,
+        bags: existing.bags + item.bags,
+        unit_price: existing.unit_price,
+        note: `${existing.note ?? ""} ${item.note ?? ""}`.trim(),
+      });
+    }
+  }
+
+  return Array.from(summaryMap.values());
+}
 
 export function Table({
   onPrint,
@@ -38,10 +63,17 @@ export function Table({
 
   const handleRefresh = useCallback(() => refetch(), [refetch]);
 
+  const summarizedData = useMemo(() => {
+    return (data ?? []).map((group) => ({
+      ...group,
+      items: summarizeItems(group.items),
+    }));
+  }, [data]);
+
   const table = useMantineReactTable({
     ...tableOptions,
     columns,
-    data: data ?? [],
+    data: summarizedData ?? [],
     enablePagination: false,
     enableRowActions: false,
     enableColumnPinning: true,
