@@ -22,7 +22,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
     return (
       <div ref={ref} style={{ padding: 0, fontFamily: "Courier New" }}>
         {rows.map((group, groupIndex) => {
-          const itemsPerPagePattern = [6, 8]; // Halaman 1: 7 items, Halaman 2: 9 items, sisanya bebas
+          const itemsPerPagePattern = [6, 7, 7]; // Halaman 1: 7 items, Halaman 2: 9 items, sisanya bebas
           let remainingItems = group.items.slice();
           let pages: any[] = [];
           let pageIndex = 0;
