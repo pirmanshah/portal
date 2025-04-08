@@ -131,7 +131,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                           </p>
 
                           <p style={{ margin: 0, padding: 0, fontSize: 14 }}>
-                            <strong>Payment Term :</strong> 60D
+                            <strong>Payment Term :</strong> {group.payment_code}
                           </p>
                         </div>
                       </>

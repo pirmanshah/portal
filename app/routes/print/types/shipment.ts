@@ -31,5 +31,7 @@ export type ShipmentGroup = {
   delivery_order_number: string;
   issue_date: string;
   invoice_number: string;
+  payment_code: string;
+  payment_name: string;
   items: ShipmentItem[];
 };
