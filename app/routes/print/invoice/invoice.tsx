@@ -81,10 +81,6 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                           <p style={{ margin: 0, padding: 0, fontSize: 14 }}>
                             <strong>Payment Term :</strong> 60D
                           </p>
-
-                          <p style={{ margin: 0, padding: 0, fontSize: 14 }}>
-                            <strong>Please pay by :</strong> 30-05-2025
-                          </p>
                         </div>
                       </div>
                     )}
