@@ -40,6 +40,19 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
               {pages.map((pageItems, page) => {
                 const isFirstPage = page === 0;
                 const isLastPage = page === totalPages - 1;
+
+                const total = group.items.reduce(
+                  (sum, item) => Number(sum) + Number(item.qty_delivery),
+                  0
+                );
+
+                const totalBags = group.items.reduce(
+                  (sum, item) => sum + item.bags,
+                  0
+                );
+
+                const ttlGross = total + totalBags * 0.2;
+
                 return (
                   <div
                     key={page}
@@ -271,7 +284,8 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                   textAlign: "right",
                                 }}
                               >
-                                Total:
+                                Total: <br />
+                                Gross Weight:
                               </td>
                               <td
                                 style={{
@@ -283,11 +297,14 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                 }}
                               >
                                 <NumberFormatter
-                                  value={group.items.reduce(
-                                    (sum, item) =>
-                                      Number(sum) + Number(item.qty_delivery),
-                                    0
-                                  )}
+                                  value={total}
+                                  decimalScale={2}
+                                  fixedDecimalScale
+                                  thousandSeparator=","
+                                />{" "}
+                                <br />
+                                <NumberFormatter
+                                  value={ttlGross}
                                   decimalScale={2}
                                   fixedDecimalScale
                                   thousandSeparator=","
@@ -303,15 +320,12 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                 }}
                               >
                                 <NumberFormatter
-                                  value={group.items.reduce(
-                                    (sum, item) => sum + item.bags,
-                                    0
-                                  )}
+                                  value={totalBags}
                                   decimalScale={2}
                                   fixedDecimalScale
                                   thousandSeparator=","
                                 />{" "}
-                                bags
+                                bags <br />{" "}
                               </td>
                             </tr>
                           </tfoot>

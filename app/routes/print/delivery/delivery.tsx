@@ -22,13 +22,13 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
     return (
       <div ref={ref} style={{ padding: 0, fontFamily: "Courier New" }}>
         {rows.map((group, groupIndex) => {
-          const itemsPerPagePattern = [6, 7, 7]; // Halaman 1: 7 items, Halaman 2: 9 items, sisanya bebas
+          const itemsPerPagePattern = [6, 7]; // Halaman 1: 7 items, Halaman 2: 9 items, sisanya bebas
           let remainingItems = group.items.slice();
           let pages: any[] = [];
           let pageIndex = 0;
 
           while (remainingItems.length > 0) {
-            const itemsPerPage = itemsPerPagePattern[pageIndex] || 10; // Halaman 3+ pakai 10 item
+            const itemsPerPage = itemsPerPagePattern[pageIndex] || 7; // Halaman 3+ pakai 10 item
             pages.push(remainingItems.splice(0, itemsPerPage));
             pageIndex++;
           }
@@ -148,7 +148,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
 
                           {/* Page info di kanan */}
                           <div style={{ flex: 1, textAlign: "right" }}>
-                            <span>Page: {pageIndex}</span>
+                            <span>Page: {page + 1}</span>
                           </div>
                         </div>
 
