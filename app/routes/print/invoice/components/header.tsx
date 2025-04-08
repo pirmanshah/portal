@@ -24,7 +24,7 @@ export function InvoiceHeader({ data }: { data: ShipmentGroup }) {
             Customer Ref. No.
           </p>
           <p style={{ fontSize: 15 }}>
-            : {data.issue_date} <br />: ACR24006629 <br /> :
+            : {data.issue_date} <br />: {data.invoice_number ?? "-"} <br /> :
           </p>
         </div>
       </div>

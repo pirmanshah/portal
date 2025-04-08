@@ -21,7 +21,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
     return (
       <div ref={ref} style={{ padding: 0, fontFamily: "Courier New" }}>
         {rows.map((group, groupIndex) => {
-          const itemsPerPagePattern = [13, 18];
+          const itemsPerPagePattern = [12, 12];
           let remainingItems = group.items.slice();
           let pages: any[] = [];
           let pageIndex = 0;
@@ -121,19 +121,17 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
 
                         <div
                           style={{
+                            marginTop: 15,
                             display: "flex",
                             justifyContent: "space-between",
                           }}
                         >
-                          <p style={{ margin: 0, padding: 0 }}>
-                            Ship to : {group.customer_code}
+                          <p style={{ margin: 0, padding: 0, fontSize: 14 }}>
+                            <strong>Customer :</strong> {group.customer_code}
                           </p>
 
-                          <p style={{ margin: 0, padding: 0 }}>
-                            Order No. : {group.delivery_order_number}
-                          </p>
-                          <p style={{ margin: 0, padding: 0 }}>
-                            Date : {group.issue_date}
+                          <p style={{ margin: 0, padding: 0, fontSize: 14 }}>
+                            <strong>Payment Term :</strong> 60D
                           </p>
                         </div>
                       </>

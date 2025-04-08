@@ -30,5 +30,6 @@ export type ShipmentGroup = {
   bc_number: string | null;
   delivery_order_number: string;
   issue_date: string;
+  invoice_number: string;
   items: ShipmentItem[];
 };
