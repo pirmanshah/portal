@@ -21,7 +21,6 @@ export function IssueRowActions({
   const { item_code } = row.original;
 
   function handleDelete() {
-    console.log(row);
     onDelete(row);
     close();
   }

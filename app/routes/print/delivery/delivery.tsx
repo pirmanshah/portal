@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import Barcode from "react-barcode";
 import { NumberFormatter } from "@mantine/core";
 import { useReactToPrint } from "react-to-print";
 import { forwardRef, Fragment, useEffect, useRef, useState } from "react";
@@ -66,6 +67,22 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                           DELIVERY ORDER
                         </h2>
 
+                        {group.customer_code === "CMUR01" && (
+                          <div
+                            style={{
+                              right: 0,
+                              top: 80,
+                              position: "absolute",
+                            }}
+                          >
+                            <Barcode
+                              height={32}
+                              displayValue={false}
+                              value={group.delivery_order_number || "N/A"}
+                            />
+                          </div>
+                        )}
+
                         <div
                           style={{
                             gap: 30,
@@ -106,9 +123,6 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                           </p>
 
                           <div style={{ display: "flex", gap: 20 }}>
-                            {/* <p style={{ margin: 0, padding: 0 }}>
-                              No. AJU BC27 02344
-                            </p> */}
                             <p style={{ margin: 0, padding: 0 }}>
                               <strong>Date :</strong>{" "}
                               {dayjs(group.issue_date).format("DD-MM-YYYY")}

@@ -1,21 +1,7 @@
 /* eslint-disable react/prop-types */
-import {
-  Text,
-  Group,
-  Modal,
-  Select,
-  TextInput,
-  type ComboboxItem,
-  type ComboboxData,
-} from "@mantine/core";
+import { Text, Group, Modal, Select, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  useMemo,
-  useState,
-  type MouseEventHandler,
-  type ChangeEventHandler,
-  useCallback,
-} from "react";
+import { useMemo, useState, type MouseEventHandler, useCallback } from "react";
 import {
   type MRT_Row,
   MantineReactTable,

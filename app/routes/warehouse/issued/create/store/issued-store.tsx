@@ -16,13 +16,13 @@ interface IssuedStore {
 
 export const useIssuedStore = create<IssuedStore>((set) => ({
   issueds: {},
-  cpwi: "",
+  cpwi: " ",
   destination: null,
   setCpwi: (cpwi) => set(() => ({ cpwi })),
   setDestination: (destination) => set(() => ({ destination })),
   reset: () =>
     set(() => ({
-      cpwi: "",
+      cpwi: " ",
       destination: null,
       issueds: {},
     })),

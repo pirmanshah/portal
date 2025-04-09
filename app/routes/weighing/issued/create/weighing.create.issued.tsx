@@ -93,6 +93,10 @@ export default function CreateIssue() {
   function handleAddInvToIssue(rows: Inventory[]) {
     const { setIssued, issueds } = useIssuedStore.getState();
 
+    if (!transactionCode) {
+      generateCode();
+    }
+
     if (rows.length === 0) return;
 
     const existingItems = Object.values(issueds);
