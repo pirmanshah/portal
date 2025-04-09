@@ -9,13 +9,8 @@ export function Signature({ data }: { data: ShipmentGroup }) {
     0
   );
 
-  // Filter item yang tidak diawali huruf "L"
-  const taxableItems = data.items.filter(
-    (item) => !item.item_code.startsWith("L")
-  );
-
   // Hitung total tax hanya untuk item yang tidak diawali huruf "L"
-  const ttl_tax = taxableItems.reduce(
+  const ttl_tax = data.items.reduce(
     (sum, item) => Number(sum) + Number(item.tax),
     0
   );

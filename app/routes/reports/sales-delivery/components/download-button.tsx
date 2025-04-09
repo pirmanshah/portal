@@ -187,6 +187,8 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         const cell = row.getCell(colIndex + 1);
         if (col.key === "no") {
           cell.value = rowIndex + 1;
+        } else if (col.key === "shipped_qty") {
+          cell.value = Number((item as any)[col.key]);
         } else if (col.key.includes("date")) {
           cell.value = dayjs((item as any)[col.key]).format("DD/MM/YYYY");
         } else {

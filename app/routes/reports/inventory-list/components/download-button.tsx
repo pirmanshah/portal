@@ -147,6 +147,15 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         const cell = row.getCell(colIndex + 1);
         if (col.key === "no") {
           cell.value = rowIndex + 1;
+        } else if (
+          col.key === "opening" ||
+          col.key === "qty_in" ||
+          col.key === "qty_out" ||
+          col.key === "ending_balance" ||
+          col.key === "price" ||
+          col.key === "amount"
+        ) {
+          cell.value = Number((item as any)[col.key]);
         } else if (col.key.includes("date")) {
           cell.value = dayjs((item as any)[col.key]).format("DD/MM/YYYY");
         } else {

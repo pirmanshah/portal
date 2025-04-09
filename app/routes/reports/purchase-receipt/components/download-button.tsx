@@ -149,6 +149,8 @@ export function Download({ rows, disabled = false }: DownloadProps) {
           cell.value = rowIndex + 1;
         } else if (col.key === "user_created") {
           cell.value = item.user_created?.fullname;
+        } else if (col.key === "actual_qty") {
+          cell.value = Number((item as any)[col.key]);
         } else if (col.key.includes("date")) {
           cell.value = dayjs((item as any)[col.key]).format("DD/MM/YYYY");
         } else {
