@@ -91,20 +91,24 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                           }}
                         >
                           <div>
-                            <p style={{ margin: 0, lineHeight: 1 }}>
+                            <p
+                              style={{ margin: 0, lineHeight: 1, fontSize: 14 }}
+                            >
                               {group.customer_code} <br />
                               {group.customer_name}
                             </p>
-                            <p style={{ lineHeight: 1 }}>
+                            <p style={{ lineHeight: 1, fontSize: 14 }}>
                               {group.address_1} {group.address_2}
                             </p>
                           </div>
                           <div>
-                            <p style={{ margin: 0, lineHeight: 1 }}>
+                            <p
+                              style={{ margin: 0, lineHeight: 1, fontSize: 14 }}
+                            >
                               Delivery Address <br />
                               {group.delivery_customer}
                             </p>
-                            <p style={{ lineHeight: 1 }}>
+                            <p style={{ lineHeight: 1, fontSize: 14 }}>
                               {group.delivery_address_1}{" "}
                               {group.delivery_address_2}
                             </p>
@@ -117,13 +121,13 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                             justifyContent: "space-between",
                           }}
                         >
-                          <p style={{ margin: 0, padding: 0 }}>
+                          <p style={{ margin: 0, padding: 0, fontSize: 14 }}>
                             <strong>DO No :</strong>{" "}
                             {group.delivery_order_number}
                           </p>
 
                           <div style={{ display: "flex", gap: 20 }}>
-                            <p style={{ margin: 0, padding: 0 }}>
+                            <p style={{ margin: 0, padding: 0, fontSize: 14 }}>
                               <strong>Date :</strong>{" "}
                               {dayjs(group.issue_date).format("DD-MM-YYYY")}
                             </p>
@@ -161,7 +165,13 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                           </div>
 
                           {/* Page info di kanan */}
-                          <div style={{ flex: 1, textAlign: "right" }}>
+                          <div
+                            style={{
+                              flex: 1,
+                              textAlign: "right",
+                              fontSize: 14,
+                            }}
+                          >
                             <span>Page: {page + 1}</span>
                           </div>
                         </div>
@@ -172,14 +182,14 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                             justifyContent: "space-between",
                           }}
                         >
-                          <p style={{ margin: 0, padding: 0 }}>
+                          <p style={{ margin: 0, padding: 0, fontSize: 14 }}>
                             Ship to : {group.customer_code}
                           </p>
 
-                          <p style={{ margin: 0, padding: 0 }}>
+                          <p style={{ margin: 0, padding: 0, fontSize: 14 }}>
                             Order No. : {group.delivery_order_number}
                           </p>
-                          <p style={{ margin: 0, padding: 0 }}>
+                          <p style={{ margin: 0, padding: 0, fontSize: 14 }}>
                             Date :{" "}
                             {dayjs(group.issue_date).format("DD-MM-YYYY")}
                           </p>
@@ -215,12 +225,17 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                               style={{
                                 textAlign: "left",
                                 fontWeight: "normal",
+                                fontSize: 14,
                               }}
                             >
                               Item Description
                             </th>
-                            <th style={{ fontWeight: "normal" }}>Delivered</th>
-                            <th style={{ fontWeight: "normal" }}>Packing</th>
+                            <th style={{ fontWeight: "normal", fontSize: 14 }}>
+                              Delivered
+                            </th>
+                            <th style={{ fontWeight: "normal", fontSize: 14 }}>
+                              Packing
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
@@ -241,20 +256,28 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                   />
                                 </td>
                                 <td style={{ lineHeight: 1 }}>
-                                  <p style={{ margin: 0 }}>
+                                  <p style={{ margin: 0, fontSize: 14 }}>
                                     PO : {item.order_number}
                                   </p>
-                                  <p style={{ margin: 0 }}>
+                                  <p style={{ margin: 0, fontSize: 14 }}>
                                     {item.item_code} {item.color}
                                   </p>
-                                  <p style={{ margin: 0 }}>{item.item_name}</p>
+                                  <p style={{ margin: 0, fontSize: 14 }}>
+                                    {item.item_name}
+                                  </p>
                                   <div
                                     style={{
                                       display: "flex",
                                       justifyContent: "space-between",
                                     }}
                                   >
-                                    <p style={{ margin: 0, paddingLeft: 30 }}>
+                                    <p
+                                      style={{
+                                        margin: 0,
+                                        paddingLeft: 30,
+                                        fontSize: 14,
+                                      }}
+                                    >
                                       Lot : {eraseLotPrefix(item.lot_number)}
                                     </p>
                                     <div
@@ -264,10 +287,13 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                         gap: 5,
                                       }}
                                     >
-                                      <p style={{ margin: 0 }}>Qty :</p>
+                                      <p style={{ margin: 0, fontSize: 14 }}>
+                                        Qty :
+                                      </p>
                                       <p
                                         style={{
                                           margin: 0,
+                                          fontSize: 14,
                                           minWidth: "100px",
                                           textAlign: "right",
                                         }}
@@ -276,12 +302,14 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                           decimalScale={2}
                                           fixedDecimalScale
                                           thousandSeparator=","
+                                          style={{ fontSize: 14 }}
                                           value={item.qty_delivery}
                                         />
                                       </p>
                                       <p
                                         style={{
                                           margin: 0,
+                                          fontSize: 14,
                                           textTransform: "lowercase",
                                         }}
                                       >
@@ -295,6 +323,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                     decimalScale={2}
                                     fixedDecimalScale
                                     thousandSeparator=","
+                                    style={{ fontSize: 14 }}
                                     value={item.qty_delivery}
                                   />{" "}
                                   {item.unit.toLowerCase()}
@@ -303,8 +332,9 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                   <NumberFormatter
                                     decimalScale={2}
                                     fixedDecimalScale
-                                    thousandSeparator=","
                                     value={item.bags}
+                                    thousandSeparator=","
+                                    style={{ fontSize: 14 }}
                                   />{" "}
                                   bags
                                 </td>
@@ -320,6 +350,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                 style={{
                                   fontWeight: "bold",
                                   textAlign: "right",
+                                  fontSize: 14,
                                 }}
                               >
                                 Total:
@@ -342,6 +373,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                   decimalScale={2}
                                   fixedDecimalScale
                                   thousandSeparator=","
+                                  style={{ fontSize: 14 }}
                                 />{" "}
                                 kg
                               </td>
@@ -362,6 +394,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                   decimalScale={2}
                                   fixedDecimalScale
                                   thousandSeparator=","
+                                  style={{ fontSize: 14 }}
                                 />{" "}
                                 bags
                               </td>
