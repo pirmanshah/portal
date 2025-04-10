@@ -4,39 +4,20 @@ import { useMutation } from "@tanstack/react-query";
 import type { TpbData } from "../TPBData";
 import { API_URL } from "#app/constants/api";
 import { useTpbStore } from "../store/use-tpb-store";
+import { fetchWithCredential } from "#app/utils/fetchWithCredential";
 
-async function uploadToCeisa(payload: TpbData) {
-  const tokenRes = await fetch(`${API_URL}/ceisa/token`);
-  const tokenData = await tokenRes.json();
-
-  if (!tokenData?.data) {
-    throw new Error("Gagal mendapatkan token CEISA.");
-  }
-
-  // 2. Kirim data ke API CEISA dengan Bearer token
-  const uploadRes = await fetch(
-    "https://apis-gw.beacukai.go.id/openapi/document",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenData.data}`,
-      },
-      body: JSON.stringify(payload),
-    }
+export async function uploadToCeisa({ payload }: { payload: TpbData }) {
+  const response = await fetchWithCredential<TpbData>(
+    `${API_URL}/ceisa/upload`,
+    "POST",
+    { payload }
   );
 
-  const resData = await uploadRes.json();
-
-  if (!uploadRes.ok || resData.status === "error") {
-    throw new Error(resData.message || "Upload gagal.");
+  if (!response.success) {
+    throw new Error(response.message);
   }
 
-  return resData;
-
-  // console.log(payload);
-
-  // return { message: "", idHeader: "" };
+  return response;
 }
 
 export function useUploadCeisaMutation() {
@@ -48,7 +29,7 @@ export function useUploadCeisaMutation() {
       toast.loading("Mengunggah ke CEISA...", { id: "upload-ceisa" });
     },
     onSuccess: (data) => {
-      toast.success(`✅ ${data.message}\nID Header: ${data.idHeader}`, {
+      toast.success(data.message, {
         id: "upload-ceisa",
       });
       resetTpbData();
