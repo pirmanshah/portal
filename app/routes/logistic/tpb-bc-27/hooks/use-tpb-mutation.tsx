@@ -8,7 +8,7 @@ import { API_URL } from "#app/constants/api";
 // Ganti URL API ini sesuai backend kamu
 async function fetchTpbData(order_number: string) {
   const response = await fetchWithCredential<TpbData>(
-    `${API_URL}/logistic/injections?order_number=${order_number}`,
+    `${API_URL}/logistic/injection?order_number=${order_number}`,
     "GET"
   );
 

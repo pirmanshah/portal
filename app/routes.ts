@@ -100,6 +100,7 @@ export default [
     layout("routes/logistic/logistic.layout.tsx", [
       ...prefix("logistic", [
         route("/bc-online", "routes/logistic/bc-online/bc-online.tsx"),
+        route("/tpb-bc-27", "routes/logistic/tpb-bc-27/tpb-bc-27.tsx"),
       ]),
     ]),
     layout("routes/production/production.layout.tsx", [

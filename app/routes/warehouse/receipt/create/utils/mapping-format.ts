@@ -16,7 +16,7 @@ export function mapIncomingToReceipt(
     supplier: item.supplier || "",
     supplier_name: item.supplier_name || "",
     storage_location: item.storage_location || "",
-    expiration_date: null,
+    expiration_date: "",
     arrival_date: "",
     arrival_time: "",
     grade: item.grade || "-",

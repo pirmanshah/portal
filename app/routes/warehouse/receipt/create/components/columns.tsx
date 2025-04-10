@@ -76,6 +76,11 @@ export function generateColumns({
       Edit: (props) => <InputCell {...props} type="text" />,
     },
     {
+      accessorKey: "expiration_date",
+      header: "Expiration Date",
+      Edit: (props) => <DateCell {...props} fieldKey="expiration_date" />,
+    },
+    {
       accessorKey: "custom_doc_type",
       header: "BC Type",
       Edit: (props) => <SelectCell {...props} data={customsTypes} />,
@@ -95,11 +100,7 @@ export function generateColumns({
       header: "AJU No.",
       Edit: (props) => <InputCell {...props} type="text" />,
     },
-    {
-      accessorKey: "expiration_date",
-      header: "Expiration Date",
-      Edit: (props) => <DateCell {...props} fieldKey="expiration_date" />,
-    },
+
     {
       accessorKey: "gross_weight",
       header: "Gross Weight",

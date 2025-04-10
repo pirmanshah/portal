@@ -19,7 +19,7 @@ export const schema = z
     storage_location: z
       .string()
       .min(1, { message: "Storage Location is required." }),
-    expiration_date: z.union([z.string(), z.date()]).nullable().optional(),
+
     arrival_date: z.union([
       z.string().min(1, { message: "Arrival Date is required." }),
       z.date(),
@@ -53,6 +53,10 @@ export const schema = z
     remarks: z.string().optional(),
     remark_general: z.string().optional(),
     gross_weight: z.number().optional(),
+    expiration_date: z.union([
+      z.string().min(1, { message: "Expiration Date is required." }),
+      z.date(),
+    ]),
   })
   .refine(
     (data) => {
