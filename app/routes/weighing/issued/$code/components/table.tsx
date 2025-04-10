@@ -1,29 +1,29 @@
 import {
+  Box,
+  Text,
+  Affix,
+  Group,
+  Modal,
+  Stack,
+  Button,
+  Transition,
+  ActionIcon,
+} from "@mantine/core";
+import {
+  MRT_ProgressBar,
   MantineReactTable,
   useMantineReactTable,
   MRT_ToolbarAlertBanner,
   type MRT_ColumnPinningState,
-  MRT_ProgressBar,
 } from "mantine-react-table";
 import { useDisclosure } from "@mantine/hooks";
-import { useCallback, useMemo, useState } from "react";
-import {
-  Affix,
-  Group,
-  Button,
-  Box,
-  Modal,
-  Stack,
-  Text,
-  Transition,
-  ActionIcon,
-} from "@mantine/core";
 import { IconCloudUp } from "@tabler/icons-react";
+import { useCallback, useMemo, useState } from "react";
 
 import {
   useDeleteIssued,
-  useIssuedCodeQuery,
   useRegisterQuery,
+  useIssuedCodeQuery,
 } from "../hooks/use-issued-code";
 import TopToolbar from "./toolbar";
 import { RowActions } from "./row-actions";
@@ -67,7 +67,7 @@ export function IssuedCodeTable({ code }: { code: string }) {
       .finally(closeRegister);
   }, [code, regiseterReceipt, refetch, closeRegister]);
 
-  const handleRefresh = useCallback(() => refetch(), [refetch]);
+  const handleRefresh = () => refetch();
 
   const onClickDelete = (code: string) => {
     setDeletedItem(code);
