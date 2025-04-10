@@ -6,7 +6,7 @@ import { API_URL } from "#app/constants/api";
 import { useTpbStore } from "../store/use-tpb-store";
 import { fetchWithCredential } from "#app/utils/fetchWithCredential";
 
-export async function uploadToCeisa({ payload }: { payload: TpbData }) {
+export async function uploadToCeisa(payload: TpbData) {
   const response = await fetchWithCredential<TpbData>(
     `${API_URL}/ceisa/upload`,
     "POST",
