@@ -14,7 +14,7 @@ type ToolbarActionProps = {
   table: MRT_TableInstance<Issued>;
 };
 
-const CREATE_PATH = `/warehouse/issued/create`;
+const CREATE_PATH = `/weighing/issued/create`;
 
 export default function TopToolbar({
   table,
