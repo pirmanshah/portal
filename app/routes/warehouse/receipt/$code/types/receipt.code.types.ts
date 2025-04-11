@@ -28,6 +28,7 @@ export type Receipt = {
   unit: string;
   is_approved: boolean;
   sender: string | null;
+  po_number: string | null;
   status: string;
   material_status: string | null;
   aju_number: string | null;

@@ -175,8 +175,8 @@ export function generateColumns(): MRT_ColumnDef<Receipt>[] {
       filterFn: "customFilterFn",
     },
     {
-      header: "Pallet No.",
-      accessorKey: "pallet_number",
+      header: "PO No.",
+      accessorKey: "po_number",
       filterFn: "customFilterFn",
     },
     {
