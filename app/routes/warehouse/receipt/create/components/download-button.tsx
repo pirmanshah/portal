@@ -20,7 +20,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 }, // Mulai dari B7
-      to: { row: 7, column: 11 }, // Sampai O7
+      to: { row: 7, column: 26 }, // Sampai O7
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -57,7 +57,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     const columns = [
       { header: "No.", key: "no", width: 5 },
       { header: "Order Number", key: "order_number", width: 20 },
-      { header: "Note", key: "note", width: 20 },
+      { header: "PO No.", key: "po_number", width: 20 },
       { header: "General Note", key: "general_note", width: 20 },
       { header: "Item Code", key: "item_code", width: 20 },
       { header: "Item Name", key: "item_name", width: 25 },
@@ -79,6 +79,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
       { header: "Grade", key: "grade", width: 15 },
       { header: "Color Index", key: "color_index", width: 15 },
       { header: "Currency", key: "currency", width: 10 },
+      { header: "Note", key: "note", width: 20 },
       { header: "Delivery Date", key: "delivery_date", width: 20 },
     ];
 
