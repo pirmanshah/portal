@@ -32,6 +32,7 @@ export function mapIncomingToReceipt(
     material_status: item.material_status || "-",
     sender: null,
     aju_number: "0",
+    po_number: item.po_number ?? "-",
     remarks: item.note,
     remark_general: item.general_note,
     gross_weight: 0,

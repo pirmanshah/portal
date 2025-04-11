@@ -58,10 +58,10 @@ export default function IncomingTable({
         },
       },
       {
-        header: "Note",
-        accessorKey: "note",
+        header: "PO No.",
+        accessorKey: "po_number",
         filterFn: "customFilterFn",
-        accessorFn: ({ note }) => note ?? "",
+        accessorFn: ({ po_number }) => po_number ?? "",
       },
       {
         accessorKey: "order_number",
@@ -125,6 +125,12 @@ export default function IncomingTable({
         accessorKey: "storage_location_name",
         filterFn: "customFilterFn",
         header: "Store Location",
+      },
+      {
+        header: "Note",
+        accessorKey: "note",
+        filterFn: "customFilterFn",
+        accessorFn: ({ note }) => note ?? "",
       },
       {
         size: 700,

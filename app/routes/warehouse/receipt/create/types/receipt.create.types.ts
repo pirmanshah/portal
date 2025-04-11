@@ -30,12 +30,14 @@ export type ReceiptCreate = {
   remarks?: string | null;
   remark_general?: string | null;
   pallet_number?: string | null;
+  po_number?: string | null;
   packing_slip: number;
   id: string;
 };
 
 export type Incoming = {
   order_number: string;
+  po_number?: string | null;
   note?: string | null;
   general_note?: string | null;
   item_code: string;

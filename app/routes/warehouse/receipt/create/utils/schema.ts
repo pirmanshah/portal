@@ -53,6 +53,7 @@ export const schema = z
     remarks: z.string().optional(),
     remark_general: z.string().optional(),
     gross_weight: z.number().optional(),
+    po_number: z.string().optional(),
     expiration_date: z.union([
       z.string().min(1, { message: "Expiration Date is required." }),
       z.date(),

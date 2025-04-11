@@ -107,6 +107,11 @@ export function generateColumns({
       Edit: (props) => <NumberCell {...props} />,
     },
     {
+      accessorKey: "po_number",
+      header: "PO No.",
+      enableEditing: false,
+    },
+    {
       accessorKey: "remarks",
       header: "Remark",
       enableEditing: false,
