@@ -143,5 +143,10 @@ export function generateColumns({
       header: "Remark",
       enableEditing: false,
     },
+    {
+      accessorKey: "remark_general",
+      header: "General Pur. Note",
+      enableEditing: false,
+    },
   ];
 }

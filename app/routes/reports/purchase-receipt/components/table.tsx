@@ -29,7 +29,12 @@ export function Table() {
       },
       {
         accessorKey: "item_name",
-        header: "Item Name",
+        header: "Description",
+        filterFn: "customFilterFn",
+      },
+      {
+        accessorKey: "remark_general",
+        header: "General Note",
         filterFn: "customFilterFn",
       },
       {

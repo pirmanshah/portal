@@ -111,9 +111,9 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         width: 15,
       },
       {
-        header: "Remark General",
+        header: "General Pur. Note",
         key: "remark_general",
-        width: 30,
+        width: 40,
       },
     ];
 
