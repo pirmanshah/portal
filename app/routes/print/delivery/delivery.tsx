@@ -451,9 +451,10 @@ export default function PrintInvoice() {
 
   const handlePrint = useReactToPrint({
     contentRef,
-    documentTitle: rows.length
-      ? rows[0].delivery_order_number
-      : "DeliveryOrder",
+    documentTitle:
+      rows.length === 1
+        ? rows[0].delivery_order_number
+        : rows.map((r) => r.delivery_order_number).join("_"),
     pageStyle: `
     @page { 
       margin: 15mm 7mm 4mm 3mm; 

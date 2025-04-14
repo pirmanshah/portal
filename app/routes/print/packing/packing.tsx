@@ -118,8 +118,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                           }}
                         >
                           <p style={{ margin: 0, padding: 0 }}>
-                            <strong>PL No :</strong>{" "}
-                            {group.delivery_order_number.replace("SJ", "PL")}
+                            <strong>PL No :</strong> {group.pl_number}
                           </p>
 
                           <div style={{ display: "flex", gap: 20 }}>
@@ -176,8 +175,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                           }}
                         >
                           <p style={{ margin: 0, padding: 0 }}>
-                            <strong>PL No :</strong>{" "}
-                            {group.delivery_order_number.replace("SJ", "PL")}
+                            <strong>PL No :</strong> {group.pl_number}
                           </p>
 
                           <div style={{ display: "flex", gap: 20 }}>
@@ -356,7 +354,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
 
 PrintableContent.displayName = "PrintableContent";
 
-export default function PrintInvoice() {
+export default function PrintPackingList() {
   const [rows, setRows] = useState<ShipmentGroup[]>([]);
   const [isPrinting, setIsPrinting] = useState(false);
   const [pendingPrint, setPendingPrint] = useState(false);
@@ -380,9 +378,10 @@ export default function PrintInvoice() {
 
   const handlePrint = useReactToPrint({
     contentRef,
-    documentTitle: rows.length
-      ? rows[0].delivery_order_number
-      : "DeliveryOrder",
+    documentTitle:
+      rows.length === 1
+        ? rows[0].pl_number
+        : rows.map((r) => r.pl_number).join("_"),
     pageStyle: `
     @page { 
       margin: 15mm 7mm 4mm 3mm; 

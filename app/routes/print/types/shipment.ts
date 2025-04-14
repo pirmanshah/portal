@@ -16,6 +16,7 @@ export type ShipmentItem = {
   amount: number;
   note: string;
   currency: string;
+  pl_number: string;
 };
 
 export type ShipmentGroup = {
@@ -33,5 +34,6 @@ export type ShipmentGroup = {
   invoice_number: string;
   payment_code: string;
   payment_name: string;
+  pl_number: string;
   items: ShipmentItem[];
 };
