@@ -1,14 +1,12 @@
 import { NumberFormatter } from "@mantine/core";
-import type { ShipmentGroup } from "../../types/shipment";
-import styles from "./signature.module.css";
 
-export function Signature({ data }: { data: ShipmentGroup }) {
+import styles from "./signature.module.css";
+import type { Invoice } from "../../types/invoice";
+
+export function Signature({ data }: { data: Invoice }) {
   // Hitung total goods (semua item tetap dihitung)
 
-  const amount = data.items.reduce(
-    (sum, item) => sum + Number(item.qty_delivery) * Number(item.unit_price),
-    0
-  );
+  const amount = data.items.reduce((sum, item) => sum + Number(item.amount), 0);
 
   // Hitung total tax hanya untuk item yang tidak diawali huruf "L"
   const ttl_tax = data.items.reduce(

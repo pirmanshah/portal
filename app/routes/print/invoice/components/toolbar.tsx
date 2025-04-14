@@ -6,13 +6,12 @@ import {
 } from "mantine-react-table";
 import { Button, Divider, Group } from "@mantine/core";
 import { IconRefresh, IconPrinter } from "@tabler/icons-react";
-
-import type { ShipmentGroup } from "../../types/shipment";
+import type { Invoice } from "../../types/invoice";
 
 type ToolbarActionProps = {
   onRefresh: () => void;
-  onPrint: (rows: ShipmentGroup[]) => void;
-  table: MRT_TableInstance<ShipmentGroup>;
+  onPrint: (rows: Invoice[]) => void;
+  table: MRT_TableInstance<Invoice>;
 };
 
 export default function TopToolbar({
@@ -20,7 +19,7 @@ export default function TopToolbar({
   onRefresh,
   onPrint,
 }: ToolbarActionProps) {
-  const handlePrint = (rows: MRT_Row<ShipmentGroup>[]) => {
+  const handlePrint = (rows: MRT_Row<Invoice>[]) => {
     const rowData = rows.map((row) => row.original);
     onPrint(rowData);
   };

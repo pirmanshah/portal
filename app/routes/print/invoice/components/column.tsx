@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
-import type { MRT_ColumnDef } from "mantine-react-table";
-import type { ShipmentGroup, ShipmentItem } from "../../types/shipment";
 import { NumberFormatter } from "@mantine/core";
+import type { MRT_ColumnDef } from "mantine-react-table";
+import type { Invoice, InvoiceItem } from "../../types/invoice";
 
-export function generateColumns(): MRT_ColumnDef<ShipmentGroup>[] {
+export function generateColumns(): MRT_ColumnDef<Invoice>[] {
   return [
     {
       id: "issue_date",
@@ -21,6 +21,12 @@ export function generateColumns(): MRT_ColumnDef<ShipmentGroup>[] {
         const dateValue = cell.getValue<Date>();
         return dateValue ? dayjs(dateValue).format("DD-MM-YYYY") : "";
       },
+    },
+    {
+      header: "Invoice Number",
+      filterVariant: "select",
+      accessorKey: "invoice_number",
+      columnFilterModeOptions: ["equals"],
     },
     {
       header: "DO Number",
@@ -41,20 +47,21 @@ export function generateColumns(): MRT_ColumnDef<ShipmentGroup>[] {
       columnFilterModeOptions: ["equals"],
     },
     {
-      header: "Address 1",
-      accessorKey: "address_1",
+      header: "Address",
       filterFn: "contains",
+      accessorKey: "address_1",
       columnFilterModeOptions: ["contains"],
+      accessorFn: (row) => `${row?.address_1} ${row?.address_2}`,
     },
   ];
 }
 
-export function generateChildColumns(): MRT_ColumnDef<ShipmentItem>[] {
+export function generateChildColumns(): MRT_ColumnDef<InvoiceItem>[] {
   return [
     {
-      header: "DO Number",
-      accessorKey: "order_number",
+      header: "Invoice Number",
       filterVariant: "select",
+      accessorKey: "invoice_number",
       columnFilterModeOptions: ["equals"],
     },
     {
@@ -64,12 +71,12 @@ export function generateChildColumns(): MRT_ColumnDef<ShipmentItem>[] {
       columnFilterModeOptions: ["equals"],
     },
     {
-      header: "Item Name",
+      header: "Description",
       accessorKey: "item_name",
     },
     {
-      header: "Qty Order",
-      accessorKey: "qty_order",
+      header: "Qty Delivery",
+      accessorKey: "qty_delivery",
       mantineTableBodyCellProps: {
         align: "right",
       },
@@ -78,7 +85,7 @@ export function generateChildColumns(): MRT_ColumnDef<ShipmentItem>[] {
           thousandSeparator
           decimalScale={4}
           fixedDecimalScale
-          value={row.qty_order}
+          value={row.qty_delivery}
         />
       ),
     },
@@ -98,33 +105,10 @@ export function generateChildColumns(): MRT_ColumnDef<ShipmentItem>[] {
       ),
     },
     {
-      header: "Qty Back Order",
-      accessorKey: "qty_back_order",
-      mantineTableBodyCellProps: {
-        align: "right",
-      },
-      accessorFn: (row) => (
-        <NumberFormatter
-          thousandSeparator
-          decimalScale={4}
-          fixedDecimalScale
-          value={row.qty_back_order}
-        />
-      ),
-    },
-    {
       header: "Unit",
       accessorKey: "unit",
       filterVariant: "select",
       columnFilterModeOptions: ["equals"],
-    },
-    {
-      header: "Bags",
-      accessorKey: "bags",
-    },
-    {
-      header: "Lot Number",
-      accessorKey: "lot_number",
     },
     {
       header: "Color",

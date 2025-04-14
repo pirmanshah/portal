@@ -4,6 +4,7 @@ import { forwardRef, Fragment, useEffect, useRef, useState } from "react";
 
 import { Table } from "./components/table";
 import type { Route } from "./+types/invoice";
+import type { Invoice } from "../types/invoice";
 import { Signature } from "./components/signature";
 import { InvoiceHeader } from "./components/header";
 import type { ShipmentGroup, ShipmentItem } from "../types/shipment";
@@ -13,7 +14,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 type PrintableContentProps = {
-  rows: ShipmentGroup[];
+  rows: Invoice[];
 };
 
 const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
@@ -235,8 +236,8 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                   <NumberFormatter
                                     decimalScale={2}
                                     fixedDecimalScale
+                                    value={item.amount}
                                     thousandSeparator=","
-                                    value={item.qty_delivery * item.unit_price}
                                   />
                                 </td>
                               </tr>
@@ -272,7 +273,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
 PrintableContent.displayName = "PrintableContent";
 
 export default function PrintInvoice() {
-  const [rows, setRows] = useState<ShipmentGroup[]>([]);
+  const [rows, setRows] = useState<Invoice[]>([]);
   const [isPrinting, setIsPrinting] = useState(false);
   const [pendingPrint, setPendingPrint] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);

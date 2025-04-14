@@ -1,12 +1,12 @@
-import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
 import { useMemo } from "react";
+import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
 
 import { generateChildColumns } from "./column";
-import type { ShipmentItem } from "../../types/shipment";
+import type { InvoiceItem } from "../../types/invoice";
 import { createTableOptions } from "#app/utils/createTableOptions";
 
-export function TableItem({ data = [] }: { data: ShipmentItem[] }) {
-  const tableOptions = useMemo(() => createTableOptions<ShipmentItem>(), []);
+export function TableItem({ data = [] }: { data: InvoiceItem[] }) {
+  const tableOptions = useMemo(() => createTableOptions<InvoiceItem>(), []);
   const columns = useMemo(() => generateChildColumns(), []);
 
   const table = useMantineReactTable({

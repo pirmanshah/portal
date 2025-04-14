@@ -1,7 +1,7 @@
-import type { ShipmentGroup } from "../../types/shipment";
+import type { Invoice } from "../../types/invoice";
 import styles from "./header.module.css";
 
-export function InvoiceHeader({ data }: { data: ShipmentGroup }) {
+export function InvoiceHeader({ data }: { data: Invoice }) {
   return (
     <div className={styles.gridContainer}>
       {/* Kolom Customer */}
