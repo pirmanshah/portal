@@ -4,8 +4,9 @@ import styles from "./signature.module.css";
 
 export function Signature({ data }: { data: ShipmentGroup }) {
   // Hitung total goods (semua item tetap dihitung)
-  const ttl_goods = data.items.reduce(
-    (sum, item) => Number(sum) + Number(item.amount),
+
+  const amount = data.items.reduce(
+    (sum, item) => sum + Number(item.qty_delivery) * Number(item.unit_price),
     0
   );
 
@@ -16,7 +17,7 @@ export function Signature({ data }: { data: ShipmentGroup }) {
   );
 
   // Total amount = goods + tax
-  const ttl_amount = ttl_goods + ttl_tax;
+  const ttl_amount = amount + ttl_tax;
 
   return (
     <div className={styles.container}>
@@ -25,9 +26,9 @@ export function Signature({ data }: { data: ShipmentGroup }) {
           <p style={{ margin: 0, fontWeight: "bold" }}>GOODS</p>
           <p style={{ margin: 0, fontWeight: "bold", paddingLeft: 30 }}>
             <NumberFormatter
+              value={amount}
               decimalScale={2}
               fixedDecimalScale
-              value={ttl_goods}
               thousandSeparator=","
             />
           </p>

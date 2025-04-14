@@ -236,7 +236,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                     decimalScale={2}
                                     fixedDecimalScale
                                     thousandSeparator=","
-                                    value={item.amount}
+                                    value={item.qty_delivery * item.unit_price}
                                   />
                                 </td>
                               </tr>
