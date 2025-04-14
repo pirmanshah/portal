@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import type { Invoice } from "../../types/invoice";
 import styles from "./header.module.css";
 
@@ -24,7 +25,8 @@ export function InvoiceHeader({ data }: { data: Invoice }) {
             Customer Ref. No.
           </p>
           <p style={{ fontSize: 15 }}>
-            : {data.issue_date} <br />: {data.invoice_number} <br /> :
+            : {dayjs(data.issue_date).format("DD-MM-YYYY")} <br />:{" "}
+            {data.invoice_number} <br /> :
           </p>
         </div>
       </div>

@@ -21,10 +21,10 @@
   margin: 0;
   font-size: 15px;
   font-weight: bold;
-  line-height: 1.5; /* Pastikan baris sejajar */
+  line-height: 1.1; /* Pastikan baris sejajar */
 }
 
 .invoiceGrid p {
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.1;
 }

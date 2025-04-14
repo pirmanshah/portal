@@ -96,6 +96,7 @@ export function createTableOptions<T extends MRT_RowData>(
       radius: "xs",
       placeholder: "",
       variant: "default",
+      autoComplete: "off",
       style: { borderBottom: "unset" },
       styles: { input: { padding: 5 } },
     },
@@ -104,6 +105,7 @@ export function createTableOptions<T extends MRT_RowData>(
       radius: "xs",
       placeholder: "",
       variant: "default",
+      autoComplete: "off",
       style: { borderBottom: "unset" },
       styles: { input: { padding: 5 } },
     },
@@ -112,6 +114,7 @@ export function createTableOptions<T extends MRT_RowData>(
       radius: "xs",
       placeholder: "",
       variant: "default",
+      autoComplete: "off",
       style: { borderBottom: "unset" },
       styles: { input: { padding: 5, height: 10 } },
       rightSection: !column.getFilterValue() ? (
