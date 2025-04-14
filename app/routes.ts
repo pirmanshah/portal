@@ -14,6 +14,7 @@ export default [
     route(PATH.SIGN_IN, "routes/auth/sign-in/sign-in.tsx"),
   ]),
   layout("routes/app.layout.tsx", [
+    route("/unauthorized", "routes/unauthorized.tsx"),
     route(PATH.DASHBOARD, "routes/dashboard/dashboard.tsx"),
     route("/profile", "routes/profile/profile.tsx"),
     ...prefix("automation", [index("routes/automation/automation.tsx")]),
@@ -90,6 +91,7 @@ export default [
       ...prefix("cust-service", [
         route("/coretax", "routes/cs/cs-coretax.tsx"),
         route("/reports", "routes/cs/cs-report.tsx"),
+        route("/print", "routes/cs/cs-print.tsx"),
       ]),
     ]),
     layout("routes/purchasing/purchasing.layout.tsx", [

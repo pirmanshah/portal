@@ -1,10 +1,10 @@
 import { Box } from "@mantine/core";
-import type { Route } from "./+types/wh-print";
+import type { Route } from "./+types/cs-print";
 import { SearchableList } from "#app/components/searchable-list";
 
 export const meta: Route.MetaFunction = () => [{ title: "Print Document" }];
 
-export default function WHPrint() {
+export default function CsPrint() {
   return (
     <Box>
       <SearchableList

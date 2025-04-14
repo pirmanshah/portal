@@ -326,7 +326,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                     style={{ fontSize: 14 }}
                                     value={item.qty_delivery}
                                   />{" "}
-                                  {item.unit.toLowerCase()}
+                                  {item.unit?.toLowerCase()}
                                 </td>
                                 <td style={{ textAlign: "right" }}>
                                   <NumberFormatter

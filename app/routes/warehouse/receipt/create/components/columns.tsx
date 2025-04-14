@@ -1,4 +1,11 @@
-import { type ComboboxData } from "@mantine/core";
+import {
+  Box,
+  Group,
+  NumberFormatter,
+  Stack,
+  Text,
+  type ComboboxData,
+} from "@mantine/core";
 import { type MRT_ColumnDef } from "mantine-react-table";
 
 import { DateCell } from "./date-cell";
@@ -33,6 +40,26 @@ export function generateColumns({
       accessorKey: "actual_qty",
       header: "Received Quantity",
       Edit: (props) => <NumberCell {...props} />,
+      Footer: ({ table }) => (
+        <Group justify="space-between" style={{ margin: -10 }}>
+          <Text fz={11} c="dimmed">
+            Total Received:
+          </Text>
+          <Text fz={11} fw={500}>
+            <NumberFormatter
+              decimalScale={2}
+              fixedDecimalScale
+              value={table
+                .getRowModel()
+                .rows.reduce(
+                  (sum, item) => Number(sum) + Number(item.original.actual_qty),
+                  0
+                )}
+              thousandSeparator=","
+            />
+          </Text>
+        </Group>
+      ),
     },
     {
       size: 35,

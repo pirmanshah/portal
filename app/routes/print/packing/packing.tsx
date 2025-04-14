@@ -259,7 +259,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                     thousandSeparator=","
                                     value={item.qty_delivery}
                                   />{" "}
-                                  {item.unit.toLowerCase()}
+                                  {item.unit ? item.unit.toLowerCase() : "kg"}
                                 </td>
                                 <td style={{ textAlign: "right" }}>
                                   <NumberFormatter

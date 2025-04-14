@@ -199,7 +199,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                             (item: ShipmentItem, index: number) => (
                               <tr key={index}>
                                 <td style={{ lineHeight: 1, fontSize: 14 }}>
-                                  {item.unit.toLowerCase()}
+                                  {item.unit ? item.unit.toLowerCase() : "kg"}
                                 </td>
                                 <td
                                   style={{ textAlign: "right", fontSize: 14 }}

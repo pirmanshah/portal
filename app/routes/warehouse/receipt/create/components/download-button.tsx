@@ -19,8 +19,8 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     const worksheet = workbook.addWorksheet("Incoming");
 
     worksheet.autoFilter = {
-      from: { row: 7, column: 2 }, // Mulai dari B7
-      to: { row: 7, column: 26 }, // Sampai O7
+      from: { row: 7, column: 2 },
+      to: { row: 7, column: 26 },
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
