@@ -3,7 +3,7 @@ export type Invoice = {
   customer_name: string;
   delivery_customer: string;
   address_1: string; // c.ADR1
-  address_2: string; // c.ADR2
+  address_2: string; // c.ADR2v
   delivery_address_1: string;
   delivery_address_2: string;
   delivery_order_number: string;

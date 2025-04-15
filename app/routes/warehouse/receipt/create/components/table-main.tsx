@@ -58,12 +58,14 @@ export function TableMain({
     [customsTypes]
   );
 
+  const data = useMemo(() => Object.values(receipts), [receipts]);
+
   const table = useMantineReactTable({
     ...tableOptions,
+    data,
     columns,
     enableRowOrdering: true,
     getRowId: (row) => row.id,
-    data: Object.values(receipts),
     enableRowVirtualization: true,
     state: {
       columnPinning: {
