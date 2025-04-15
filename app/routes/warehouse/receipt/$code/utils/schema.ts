@@ -7,7 +7,10 @@ export const updateSchema = z
     maker_lot_number: z
       .string()
       .min(1, { message: "Business Partner is required." }),
-    expiration_date: z.union([z.string(), z.date()]).nullable().optional(),
+    expiration_date: z.union([
+      z.string().min(1, { message: "Expire date is required." }),
+      z.date(),
+    ]),
     arrival_date: z.union([
       z.string().min(1, { message: "Arrival Date is required." }),
       z.date(),

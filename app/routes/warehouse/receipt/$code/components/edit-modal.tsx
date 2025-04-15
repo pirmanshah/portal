@@ -103,7 +103,12 @@ export function EditModal({ item, opened, onClose }: EditModalProps) {
             {...form.getInputProps("delivery_order_date")}
           />
         </Group>
-
+        <DateInput
+          size="xs"
+          clearable
+          label="Expire Date"
+          {...form.getInputProps("expiration_date")}
+        />
         <Group gap="xs" grow>
           <Select
             size="xs"

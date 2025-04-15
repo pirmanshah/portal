@@ -11,7 +11,7 @@ export type Receipt = {
   work_center: string;
   supplier: string;
   storage_location: string;
-  expiration_date: Date | null;
+  expiration_date: Date;
   arrival_date: Date;
   arrival_time: string;
   color_index: string | null;
@@ -57,8 +57,8 @@ export type UpdateReceipt = {
   arrival_time: string;
   delivery_order_number: string;
   delivery_order_date: Date;
+  expiration_date: Date;
   custom_doc_number: string | null;
   custom_doc_type: string | null;
   custom_doc_date: Date | null;
-  expiration_date: Date | null;
 };

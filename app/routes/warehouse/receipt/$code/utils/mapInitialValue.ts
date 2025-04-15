@@ -16,8 +16,6 @@ export function mapInitialValue(item: Receipt) {
     custom_doc_date: item.custom_doc_date
       ? new Date(item.custom_doc_date)
       : null,
-    expiration_date: item.expiration_date
-      ? new Date(item.expiration_date)
-      : null,
+    expiration_date: new Date(item.expiration_date),
   };
 }
