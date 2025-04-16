@@ -5,13 +5,20 @@ import type { Invoice } from "../../types/invoice";
 
 export function Signature({ data }: { data: Invoice }) {
   const items = Array.isArray(data.items) ? data.items : [];
-  const amount = items.reduce(
-    (sum, item) => sum + (Number(item.amount) || 0),
-    0
-  );
-  const ttl_tax = items.reduce((sum, item) => sum + (Number(item.tax) || 0), 0);
-  const ttl_amount = amount + ttl_tax;
   const currency = items[0]?.currency || "IDR";
+
+  // Pembulatan hanya untuk IDR
+  const adjustValue = (value: number) =>
+    currency === "IDR" ? Math.round(value) : value;
+
+  const amount = adjustValue(
+    items.reduce((sum, item) => sum + (Number(item.amount) || 0), 0)
+  );
+  const ttl_tax = adjustValue(
+    items.reduce((sum, item) => sum + (Number(item.tax) || 0), 0)
+  );
+  const ttl_amount = adjustValue(amount + ttl_tax);
+
   const accountNumber = currency === "IDR" ? "5100109007" : "5300379850";
   const invoiceNumber = data.invoice_number || "-";
 
@@ -51,9 +58,9 @@ export function Signature({ data }: { data: Invoice }) {
             </p>
             <p style={{ margin: 0, fontWeight: "bold" }}>
               <NumberFormatter
+                value={ttl_amount}
                 decimalScale={2}
                 fixedDecimalScale
-                value={ttl_amount}
                 thousandSeparator=","
               />
             </p>
