@@ -5,53 +5,54 @@ import {
   MRT_ToolbarAlertBanner,
   type MRT_ColumnPinningState,
 } from "mantine-react-table";
+import { useDisclosure } from "@mantine/hooks";
 import { useCallback, useMemo, useState } from "react";
-import { Affix, Group, Transition, Box } from "@mantine/core";
+import { Affix, Group, Button, Transition, Box } from "@mantine/core";
 
 import TopToolbar from "./toolbar";
-import { TableItem } from "./table-item";
-import { generateColumns } from "./column";
+import { RowActions } from "./row-actions";
+import { generateColumns } from "./columns";
 import { TitleTable } from "#app/components/title-table";
-import type { ShipmentGroup } from "../../types/shipment";
-import { useShipmentQuery } from "../../hooks/use-shipment";
 import { createTableOptions } from "#app/utils/createTableOptions";
+import { ConfirmationModal } from "#app/components/confirmation-modal";
+import { useUserQuery } from "../hooks/use-issued";
+import type { User } from "../types/User";
 
-export function Table({
-  onPrint,
-}: {
-  onPrint: (rows: ShipmentGroup[]) => void;
-}) {
+export function UserTable() {
+  const [opened, { open, close }] = useDisclosure(false);
+  const [deletedItem, setDeletedItem] = useState<string | null>(null);
   const [columnPinning, setColumnPinning] = useState<MRT_ColumnPinningState>({
     left: [],
   });
 
-  const {
-    data = [],
-    refetch,
-    isFetching,
-    isLoading,
-    isError,
-  } = useShipmentQuery();
+  const { data = [], refetch, isFetching, isLoading, isError } = useUserQuery();
 
-  const tableOptions = useMemo(() => createTableOptions<ShipmentGroup>(), []);
+  const tableOptions = useMemo(() => createTableOptions<User>(), []);
   const columns = useMemo(() => generateColumns(), []);
 
   const handleRefresh = useCallback(() => refetch(), [refetch]);
+
+  const onClickDelete = (id: string) => {
+    setDeletedItem(id);
+    open();
+  };
 
   const table = useMantineReactTable({
     ...tableOptions,
     columns,
     data: data ?? [],
-    enableRowActions: false,
-    enableRowSelection: true,
+    memoMode: "cells",
+    enableRowActions: true,
+    enablePagination: false,
     enableColumnPinning: true,
-    enableRowDragging: false,
+    enableRowSelection: false,
+    enableBottomToolbar: false,
     enableColumnResizing: false,
-    enableRowVirtualization: false,
-    enablePagination: true,
-    enableBottomToolbar: true,
+    enableRowVirtualization: true,
     onColumnPinningChange: setColumnPinning,
-    initialState: { pagination: { pageSize: 25, pageIndex: 0 } },
+    mantineToolbarAlertBannerProps: isError
+      ? { color: "red", children: "Error loading data" }
+      : undefined,
     state: {
       columnPinning,
       showColumnFilters: true,
@@ -62,19 +63,17 @@ export function Table({
       "mrt-row-numbers": { size: 15 },
       "mrt-row-actions": { header: "Actions", size: 80 },
     },
-    renderDetailPanel: ({ row }) => <TableItem data={row.original.items} />,
     renderTopToolbar: ({ table }) => (
       <Box pos="relative">
         <Group mt={-5} mb={2} justify="space-between">
-          <TitleTable hideArrow={false} title="Delivery Order 🖨" />
-          <TopToolbar
-            table={table}
-            onPrint={onPrint}
-            onRefresh={handleRefresh}
-          />
+          <TitleTable title="Manage Users ⚙️" backUrl="/settings" />
+          <TopToolbar table={table} onRefresh={handleRefresh} />
         </Group>
         <MRT_ProgressBar table={table} isTopToolbar size="sm" />
       </Box>
+    ),
+    renderRowActions: ({ row }) => (
+      <RowActions row={row} onDelete={onClickDelete} />
     ),
   });
 

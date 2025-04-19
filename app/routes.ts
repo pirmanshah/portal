@@ -80,6 +80,8 @@ export default [
         "/inventory-list",
         "routes/reports/inventory-list/inventory-list.tsx"
       ),
+      route("/balance-po", "routes/reports/balance-po/balance-po.tsx"),
+      route("/work-in-process", "routes/reports/wip/wip.tsx"),
     ]),
     layout("routes/accounting/accounting.layout.tsx", [
       ...prefix("accounting", [
@@ -108,6 +110,16 @@ export default [
     layout("routes/production/production.layout.tsx", [
       ...prefix("production", [
         route("/print-label", "routes/production/label/fg-label.tsx"),
+      ]),
+    ]),
+    layout("routes/settings/setting.layout.tsx", [
+      ...prefix("settings", [
+        index("routes/settings/setting.tsx"),
+        // route("/invoice", "routes/print/invoice/invoice.tsx"),
+        ...prefix("users", [
+          index("routes/settings/user/user.tsx"),
+          // route("/invoice", "routes/print/invoice/invoice.tsx"),
+        ]),
       ]),
     ]),
   ]),

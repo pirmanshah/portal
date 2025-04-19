@@ -4,11 +4,12 @@ import * as ExcelJS from "exceljs";
 import { Button } from "@mantine/core";
 import { type MRT_Row } from "mantine-react-table";
 import { IconDownload } from "@tabler/icons-react";
-import type { SalesDelivery } from "../types/SalesDelivery";
+
+import { type BalancePO } from "../types/BalancePO";
 
 interface DownloadProps {
   disabled: boolean;
-  rows: MRT_Row<SalesDelivery>[];
+  rows: MRT_Row<BalancePO>[];
 }
 
 export function Download({ rows, disabled = false }: DownloadProps) {
@@ -16,11 +17,11 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
   const exportToExcel = async () => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet("Sales_Delivery");
+    const worksheet = workbook.addWorksheet("Balance_PO");
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 }, // Mulai dari B7
-      to: { row: 7, column: 30 }, // Sampai O7
+      to: { row: 7, column: 23 }, // Sampai O7
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -44,7 +45,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     worksheet.getCell("A5").value = "Export Date";
     worksheet.getCell("A5").alignment = { horizontal: "left" };
 
-    worksheet.getCell("C4").value = "Sales Delivery"; // App name here
+    worksheet.getCell("C4").value = "Balance PO"; // App name here
     worksheet.getCell("C4").border = { bottom: { style: "thin" } };
 
     worksheet.getCell("C5").value = dayjs(new Date()).format("DD MMMM YYYY"); // Export date here
@@ -55,156 +56,34 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     // Define columns manually
     const columns = [
-      {
-        header: "No.",
-        key: "no",
-        width: 5,
-      },
-      {
-        header: "Transaction Date",
-        key: "transaction_date",
-        width: 15,
-      },
-      {
-        header: "Invoice Date",
-        key: "issue_date",
-        width: 15,
-      },
-      {
-        header: "Saler Order No.",
-        key: "sales_order_number",
-        width: 20,
-      },
-      {
-        header: "Branch No.",
-        key: "branch_number",
-        width: 10,
-      },
-      {
-        header: "Delivery Order No.",
-        key: "del_order_number",
-        width: 15,
-      },
-      {
-        header: "Invoice No.",
-        key: "invoice_number",
-        width: 15,
-      },
-      {
-        header: "Customer Code",
-        key: "customer_code",
-        width: 15,
-      },
-      {
-        header: "Customer Name",
-        key: "customer_name",
-        width: 30,
-      },
-      {
-        header: "Customer PO No.",
-        key: "customer_po",
-        width: 30,
-      },
-      {
-        header: "Item Code",
-        key: "item_code",
-        width: 30,
-      },
-      {
-        header: "Item Description",
-        key: "item_name",
-        width: 50,
-      },
-      {
-        header: "Resin Type",
-        key: "resin_type",
-        width: 15,
-      },
-      {
-        header: "Maker",
-        key: "maker",
-        width: 20,
-      },
-      {
-        header: "Brand",
-        key: "brand",
-        width: 20,
-      },
-      {
-        header: "Grade",
-        key: "grade",
-        width: 20,
-      },
-      {
-        header: "Color Code",
-        key: "color_code",
-        width: 20,
-      },
-      {
-        header: "Color",
-        key: "color",
-        width: 20,
-      },
-      {
-        header: "End User",
-        key: "end_user",
-        width: 20,
-      },
-      {
-        header: "Shipped Qty",
-        key: "shipped_qty",
-        width: 15,
-      },
-      {
-        header: "Price",
-        key: "unit_price",
-        width: 15,
-      },
-      {
-        header: "Price USD",
-        key: "unit_price_usd",
-        width: 15,
-      },
-      {
-        header: "Amount",
-        key: "sales_amount",
-        width: 15,
-      },
-      {
-        header: "Amount USD",
-        key: "sales_amount_usd",
-        width: 15,
-      },
-      {
-        header: "VAT",
-        key: "tax",
-        width: 15,
-      },
-      {
-        header: "Total Amount",
-        key: "ttl_amount",
-        width: 15,
-      },
-      {
-        header: "Currency",
-        key: "price_currency",
-        width: 15,
-      },
-      {
-        header: "Include VAT",
-        key: "include_tax",
-        width: 10,
-      },
-      {
-        header: "Rate",
-        key: "rate",
-        width: 15,
-      },
-      {
-        header: "AJU No.",
-        key: "aju_number",
-        width: 30,
-      },
+      { header: "No.", key: "no", width: 5 },
+
+      { header: "PO No.", key: "po_number", width: 15 },
+      { header: "Remarks", key: "remarks", width: 15 },
+      { header: "Order No.", key: "order_number", width: 15 },
+      { header: "Branch", key: "branch_number", width: 10 },
+
+      { header: "Created Date", key: "date_created", width: 15 },
+      { header: "Supplier", key: "supplier", width: 15 },
+      { header: "Supplier Name", key: "supplier_name", width: 30 },
+      { header: "Item Code", key: "item_code", width: 25 },
+      { header: "Description", key: "item_name", width: 30 },
+      { header: "Original Name", key: "original_name", width: 20 },
+      { header: "General Pur. Note", key: "gp_note", width: 40 },
+      { header: "Enduser & Molder", key: "end_user", width: 25 },
+
+      { header: "Schedule Qty", key: "schedule_qty", width: 15 },
+      { header: "Act. Result Total", key: "act_result_qty", width: 15 },
+      { header: "Unit", key: "unit", width: 10 },
+      { header: "Unit (General)", key: "gp_unit", width: 15 },
+      { header: "Currency", key: "currency", width: 10 },
+
+      { header: "Pur. Unit Price", key: "price", width: 15 },
+      { header: "Tax", key: "tax", width: 15 },
+      { header: "Ttl Price", key: "ttl_price", width: 18 },
+
+      { header: "Store Location", key: "store_location", width: 20 },
+      { header: "Delivery Date", key: "delivery_date", width: 15 },
     ];
 
     // Add table header manually
@@ -233,21 +112,16 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     // Add data rows manually
     for (const [rowIndex, item] of data.entries()) {
       const row = worksheet.getRow(startRow + 1 + rowIndex);
-      const isNegative = item.red_slip;
-
       for (const [colIndex, col] of columns.entries()) {
         const cell = row.getCell(colIndex + 1);
         if (col.key === "no") {
           cell.value = rowIndex + 1;
         } else if (
-          col.key === "shipped_qty" ||
-          col.key === "sales_amount" ||
-          col.key === "sales_amount_usd" ||
-          col.key === "unit_price" ||
-          col.key === "unit_price_usd" ||
+          col.key === "schedule_qty" ||
+          col.key === "act_result_qty" ||
+          col.key === "price" ||
           col.key === "tax" ||
-          col.key === "rate" ||
-          col.key === "ttl_amount"
+          col.key === "ttl_price"
         ) {
           cell.value = Number((item as any)[col.key]);
         } else if (col.key.includes("date")) {
@@ -261,31 +135,21 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         if (
           col.key === "no" ||
           col.key === "branch_number" ||
-          col.key === "include_tax" ||
-          col.key === "price_currency"
+          col.key === "currency" ||
+          col.key === "unit" ||
+          col.key === "gp_unit"
         ) {
           cell.alignment = { vertical: "middle", horizontal: "center" };
         } else if (
-          col.key === "shipped_qty" ||
-          col.key === "sales_amount" ||
-          col.key === "sales_amount_usd" ||
-          col.key === "unit_price" ||
-          col.key === "unit_price_usd" ||
+          col.key === "schedule_qty" ||
+          col.key === "act_result_qty" ||
+          col.key === "price" ||
           col.key === "tax" ||
-          col.key === "rate" ||
-          col.key === "ttl_amount"
+          col.key === "ttl_price"
         ) {
           cell.alignment = { vertical: "middle", horizontal: "right" };
         } else {
           cell.alignment = { vertical: "middle", horizontal: "left" };
-        }
-
-        if (isNegative) {
-          cell.fill = {
-            type: "pattern",
-            pattern: "solid",
-            fgColor: { argb: "FFF0F0" }, // light pink
-          };
         }
 
         cell.border = {
@@ -309,7 +173,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
       link.download =
-        "sales_delivery_" + dayjs(new Date()).format("DDMMYYHHmm") + ".xlsx";
+        "balance_po_" + dayjs(new Date()).format("DDMMYYHHmm") + ".xlsx";
       link.click();
     });
   };

@@ -80,6 +80,11 @@ export function Table() {
         filterFn: "customFilterFn",
       },
       {
+        accessorKey: "bag_number",
+        header: "Bag",
+        filterFn: "customFilterFn",
+      },
+      {
         accessorKey: "remarks",
         header: "Remark",
         filterFn: "customFilterFn",

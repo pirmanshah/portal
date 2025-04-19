@@ -72,7 +72,7 @@ export function createTableOptions<T extends MRT_RowData>(
     mantineTableHeadCellProps: {
       style: () => ({
         fontSize: "11px",
-        paddingTop: "5px 8px",
+        padding: "8px",
         fontWeight: 500,
         background:
           "light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-9))",
@@ -129,6 +129,12 @@ export function createTableOptions<T extends MRT_RowData>(
         </Text>
       </Stack>
     ),
+    mantineBottomToolbarProps: () => ({
+      style: {
+        marginBottom: -11,
+        paddingBottom: 0,
+      },
+    }),
     mantineTableProps: {
       striped: true,
     },

@@ -7,6 +7,8 @@ import {
 } from "mantine-react-table";
 import dayjs from "dayjs";
 import { useMemo, useState } from "react";
+import isBetween from "dayjs/plugin/isBetween";
+import { DatePickerInput } from "@mantine/dates";
 import { Box, Group, NumberFormatter } from "@mantine/core";
 
 import TopToolbar from "./toolbar";
@@ -14,6 +16,8 @@ import { useQueryData } from "../hooks/use-query";
 import { TitleTable } from "#app/components/title-table";
 import { type SalesDelivery } from "../types/SalesDelivery";
 import { createTableOptions } from "#app/utils/createTableOptions";
+
+dayjs.extend(isBetween);
 
 export function Table() {
   const { data, refetch, isFetching, isLoading, isError } = useQueryData();
@@ -26,31 +30,123 @@ export function Table() {
       {
         accessorKey: "transaction_date",
         header: "Transaction Date",
-        filterVariant: "date",
-        columnFilterModeOptions: ["equals"],
         accessorFn: (originalRow) => new Date(originalRow.transaction_date),
+
         filterFn: (row, columnId, filterValue) => {
-          const rowValue = row.getValue<string>(columnId);
+          const [start, end] = filterValue || [];
+          const rowValue = row.getValue<Date>(columnId);
+          const date = dayjs(rowValue);
+
+          if (!start || !end) return true;
+
+          return dayjs(date).isBetween(start, end, "day", "[]");
+        },
+
+        Filter: ({ column }) => {
+          const currentValue = column.getFilterValue() as
+            | [Date | null, Date | null]
+            | undefined;
           return (
-            dayjs(rowValue).format("DD/MM/YYYY") ===
-            dayjs(filterValue).format("DD/MM/YYYY")
+            <DatePickerInput
+              w="100%"
+              clearable
+              size="xs"
+              radius="xs"
+              type="range"
+              value={currentValue || [null, null]}
+              styles={{
+                input: {
+                  padding: 5,
+                  height: 10,
+                  fontSize: 10.5,
+                  fontWeight: "normal",
+                },
+              }}
+              onChange={(range) => column.setFilterValue(range)}
+            />
           );
         },
-        Cell: ({ cell }) => dayjs(cell.getValue<string>()).format("DD/MM/YYYY"),
+
+        Cell: ({ cell }) => dayjs(cell.getValue<Date>()).format("DD/MM/YYYY"),
+      },
+      {
+        accessorKey: "issue_date",
+        header: "Invoice Date",
+        accessorFn: (originalRow) => new Date(originalRow.issue_date),
+
+        filterFn: (row, columnId, filterValue) => {
+          const [start, end] = filterValue || [];
+          const rowValue = row.getValue<Date>(columnId);
+          const date = dayjs(rowValue);
+
+          if (!start || !end) return true;
+
+          return (
+            date.isAfter(dayjs(start).subtract(1, "day")) &&
+            date.isBefore(dayjs(end).add(1, "day"))
+          );
+        },
+
+        Filter: ({ column, table }) => {
+          const currentValue = column.getFilterValue() as
+            | [Date | null, Date | null]
+            | undefined;
+          return (
+            <DatePickerInput
+              w="100%"
+              clearable
+              size="xs"
+              radius="xs"
+              type="range"
+              value={currentValue || [null, null]}
+              styles={{
+                input: {
+                  padding: 5,
+                  height: 10,
+                  fontSize: 10.5,
+                  fontWeight: "normal",
+                },
+              }}
+              onChange={(range) => column.setFilterValue(range)}
+            />
+          );
+        },
+
+        Cell: ({ cell }) => dayjs(cell.getValue<Date>()).format("DD/MM/YYYY"),
+      },
+      {
+        accessorKey: "sales_order_number",
+        header: "SO No.",
+        filterFn: "customFilterFn",
+      },
+      {
+        accessorKey: "branch_number",
+        header: "Branch",
+        filterFn: "customFilterFn",
+      },
+      {
+        accessorKey: "del_order_number",
+        header: "DO No.",
+        filterFn: "customFilterFn",
+      },
+      {
+        accessorKey: "invoice_number",
+        header: "Invoice No.",
+        filterFn: "customFilterFn",
       },
       {
         accessorKey: "customer_code",
-        header: "Customer Code",
+        header: "Cust. Code",
         filterFn: "customFilterFn",
       },
       {
         accessorKey: "customer_name",
-        header: "Customer Name",
+        header: "Cust. Name",
         filterFn: "customFilterFn",
       },
       {
         accessorKey: "customer_po",
-        header: "Customer PO No.",
+        header: "Cust. PO No.",
         filterFn: "customFilterFn",
       },
       {
@@ -99,12 +195,6 @@ export function Table() {
         filterFn: "customFilterFn",
       },
       {
-        accessorKey: "price_currency",
-        header: "Price Currency",
-        filterFn: "equals",
-        filterVariant: "select",
-      },
-      {
         id: "shipped_qty",
         header: "Shipped Qty",
         filterFn: "contains",
@@ -112,31 +202,125 @@ export function Table() {
         accessorFn: (row) => (
           <NumberFormatter
             thousandSeparator
-            decimalScale={6}
+            decimalScale={4}
             fixedDecimalScale
             value={row.shipped_qty}
           />
         ),
       },
       {
-        accessorKey: "sales_order_number",
-        header: "Sales Order No.",
-        filterFn: "customFilterFn",
+        id: "unit_price",
+        header: "Price",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={4}
+            fixedDecimalScale
+            value={row.unit_price}
+          />
+        ),
       },
       {
-        accessorKey: "branch_number",
-        header: "Branch No.",
-        filterFn: "customFilterFn",
+        id: "unit_price_usd",
+        header: "Price USD",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={4}
+            fixedDecimalScale
+            value={row.unit_price_usd}
+          />
+        ),
       },
       {
-        accessorKey: "del_order_number",
-        header: "Del. Order No.",
-        filterFn: "customFilterFn",
+        id: "sales_amount",
+        header: "Amount",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            decimalScale={2}
+            thousandSeparator
+            fixedDecimalScale
+            value={row.sales_amount}
+          />
+        ),
       },
       {
-        accessorKey: "invoice_number",
-        header: "Invoice No.",
-        filterFn: "customFilterFn",
+        id: "sales_amount_usd",
+        header: "Amount USD",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            decimalScale={2}
+            thousandSeparator
+            fixedDecimalScale
+            value={row.sales_amount_usd}
+          />
+        ),
+      },
+      {
+        id: "tax",
+        header: "VAT",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            decimalScale={2}
+            thousandSeparator
+            fixedDecimalScale
+            value={row.tax}
+          />
+        ),
+      },
+      {
+        id: "ttl_amount",
+        header: "Total Amount",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            decimalScale={2}
+            thousandSeparator
+            fixedDecimalScale
+            value={row.ttl_amount}
+          />
+        ),
+      },
+      {
+        header: "Currency",
+        filterFn: "equals",
+        filterVariant: "select",
+        accessorKey: "price_currency",
+      },
+      {
+        accessorKey: "include_tax",
+        header: "Include VAT",
+        filterVariant: "select",
+      },
+      {
+        id: "rate",
+        header: "Rate",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            decimalScale={2}
+            thousandSeparator
+            fixedDecimalScale
+            value={row.rate ?? 0}
+          />
+        ),
+      },
+      {
+        accessorKey: "aju_number",
+        header: "AJU No.",
+        filterFn: "contains",
       },
     ],
     []
@@ -146,9 +330,16 @@ export function Table() {
     ...createTableOptions<SalesDelivery>(),
     data: data ?? [],
     columns,
+    memoMode: "cells",
     enableRowActions: false,
     enableRowSelection: false,
     enableColumnPinning: true,
+    enableRowDragging: false,
+    enableColumnResizing: false,
+    enableRowVirtualization: false,
+    enablePagination: true,
+    enableBottomToolbar: true,
+    initialState: { pagination: { pageSize: 25, pageIndex: 0 } },
     onColumnPinningChange: setColumnPinning,
     state: {
       columnPinning,
@@ -161,6 +352,12 @@ export function Table() {
         size: 10,
       },
     },
+    mantineTableBodyRowProps: ({ row }) => ({
+      style: {
+        backgroundColor: row.original.red_slip ? "#ffe6e6" : "transparent",
+      },
+    }),
+
     renderTopToolbar: ({ table }) => (
       <Box pos="relative">
         <Group mt={-5} mb={2} justify="space-between">

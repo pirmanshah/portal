@@ -131,10 +131,17 @@ export function Table() {
   const table = useMantineReactTable({
     ...createTableOptions<PriceBook>(),
     data: data ?? [],
+    memoMode: "cells",
     columns,
     enableRowActions: false,
     enableRowSelection: false,
     enableColumnPinning: true,
+    enableRowDragging: false,
+    enableColumnResizing: false,
+    enableRowVirtualization: false,
+    enablePagination: true,
+    enableBottomToolbar: true,
+    initialState: { pagination: { pageSize: 25, pageIndex: 0 } },
     onColumnPinningChange: setColumnPinning,
     state: {
       columnPinning,
