@@ -30,6 +30,10 @@ export default [
           "/receipt/create",
           "routes/warehouse/receipt/create/receipt.create.tsx"
         ),
+        route(
+          "/receipt/lines",
+          "routes/warehouse/receipt/lines/receipt_line.tsx"
+        ),
         ...prefix("issued", [
           index("routes/warehouse/issued/issued.tsx"),
           route(
