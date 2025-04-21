@@ -18,8 +18,8 @@ export default function TopToolbar({ table, onRefresh }: ToolbarActionProps) {
     <Group gap={5} align="center">
       <Download
         //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
-        rows={table.getRowModel().rows}
-        disabled={table.getRowModel().rows.length === 0}
+        rows={table.getPrePaginationRowModel().rows}
+        disabled={table.getPrePaginationRowModel().rows.length === 0}
       />
       <Divider orientation="vertical" />
 

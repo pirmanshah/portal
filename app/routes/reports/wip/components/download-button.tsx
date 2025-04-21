@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import dayjs from "dayjs";
 import * as ExcelJS from "exceljs";
 import { Button } from "@mantine/core";
