@@ -13,6 +13,7 @@ import { useQueryData } from "../hooks/use-query";
 import { TitleTable } from "#app/components/title-table";
 import { type InventoryList } from "../types/InventoryList";
 import { createTableOptions } from "#app/utils/createTableOptions";
+import dayjs from "dayjs";
 
 export function Table() {
   const { data, refetch, isFetching, isLoading, isError } = useQueryData();
@@ -23,118 +24,115 @@ export function Table() {
   const columns = useMemo<MRT_ColumnDef<InventoryList>[]>(
     () => [
       {
+        accessorKey: "order_number",
+        filterFn: "customFilterFn",
+        header: "Order",
+      },
+      {
         accessorKey: "item_code",
+        filterFn: "customFilterFn",
         header: "Item Code",
-        filterFn: "customFilterFn",
       },
       {
-        accessorKey: "material",
-        header: "Material",
+        accessorKey: "item_name",
         filterFn: "customFilterFn",
+        header: "Description",
       },
       {
-        accessorKey: "grade",
-        header: "Grade",
-        filterFn: "customFilterFn",
-      },
-      {
-        accessorKey: "color_code",
-        header: "Color Code",
-        filterFn: "customFilterFn",
-      },
-      {
+        header: "Lot",
         accessorKey: "lot_number",
-        header: "Lot No.",
         filterFn: "customFilterFn",
       },
       {
-        id: "opening",
-        header: "Opening",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
+        accessorKey: "storage_location_name",
+        filterVariant: "select",
+        columnFilterModeOptions: ["equals"],
+        header: "Storage Location",
+      },
+      {
+        id: "remaining_qty",
+        filterFn: "equals",
+        columnFilterModeOptions: ["equals"],
+        header: "Remaining Qty",
+        mantineTableBodyCellProps: {
+          align: "right",
+        },
         accessorFn: (row) => (
-          <NumberFormatter
-            thousandSeparator
-            decimalScale={4}
-            fixedDecimalScale
-            value={row.opening}
-          />
+          <Group>
+            <NumberFormatter
+              thousandSeparator
+              decimalScale={6}
+              fixedDecimalScale
+              value={row.remaining_qty}
+            />
+          </Group>
         ),
       },
       {
-        id: "qty_in",
-        header: "IN",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
+        id: "actual_qty",
+        filterFn: "equals",
+        columnFilterModeOptions: ["equals"],
+        header: "Actual Qty",
+        mantineTableBodyCellProps: {
+          align: "right",
+        },
         accessorFn: (row) => (
-          <NumberFormatter
-            thousandSeparator
-            decimalScale={4}
-            fixedDecimalScale
-            value={row.qty_in}
-          />
+          <Group>
+            <NumberFormatter
+              thousandSeparator
+              value={row.actual_qty}
+              decimalScale={6}
+              fixedDecimalScale
+            />
+          </Group>
         ),
       },
       {
-        id: "qty_out",
-        header: "Out",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            thousandSeparator
-            decimalScale={4}
-            fixedDecimalScale
-            value={row.qty_out}
-          />
-        ),
+        id: "completion_date",
+        filterVariant: "date",
+        header: "Completion Date",
+        columnFilterModeOptions: ["equals"],
+        filterFn: (row, columnId, filterValue) => {
+          const rowValue = row.getValue<Date>(columnId);
+          const filterDate = new Date(filterValue);
+          return rowValue?.toDateString() === filterDate?.toDateString();
+        },
+        accessorFn: (originalRow) =>
+          originalRow.completion_date
+            ? new Date(originalRow.completion_date)
+            : null,
+        Cell: ({ cell }) => {
+          const dateValue = cell.getValue<Date>();
+          return dateValue ? dayjs(dateValue).format("DD-MM-YYYY") : "";
+        },
       },
       {
-        id: "ending_balance",
-        header: "Ending",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            thousandSeparator
-            decimalScale={4}
-            fixedDecimalScale
-            value={row.ending_balance}
-          />
-        ),
+        id: "expiration_date",
+        filterVariant: "date",
+        header: "Expiration Date",
+        columnFilterModeOptions: ["equals"],
+        filterFn: (row, columnId, filterValue) => {
+          const rowValue = row.getValue<Date>(columnId);
+          const filterDate = new Date(filterValue);
+          return rowValue?.toDateString() === filterDate?.toDateString();
+        },
+        accessorFn: (originalRow) =>
+          originalRow.expiration_date
+            ? new Date(originalRow.expiration_date)
+            : null,
+        Cell: ({ cell }) => {
+          const dateValue = cell.getValue<Date>();
+          return dateValue ? dayjs(dateValue).format("DD-MM-YYYY") : "";
+        },
       },
       {
-        id: "price",
-        header: "Price",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            thousandSeparator
-            decimalScale={4}
-            fixedDecimalScale
-            value={row.price}
-          />
-        ),
-      },
-      {
-        id: "amount",
-        header: "Amount",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            thousandSeparator
-            decimalScale={4}
-            fixedDecimalScale
-            value={row.amount}
-          />
-        ),
+        header: "Remarks",
+        accessorKey: "remarks",
+        filterFn: "customFilterFn",
       },
     ],
     []
   );
-
   const table = useMantineReactTable({
     ...createTableOptions<InventoryList>(),
     data: data ?? [],

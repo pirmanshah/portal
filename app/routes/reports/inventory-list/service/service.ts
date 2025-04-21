@@ -4,7 +4,7 @@ import { fetchWithCredential } from "#app/utils/fetchWithCredential";
 
 export async function getData(): Promise<InventoryList[]> {
   const response = await fetchWithCredential<InventoryList[]>(
-    `${API_URL}/reports/inventory-list`,
+    `${API_URL}/warehouse/inventory`,
     "GET"
   );
 
