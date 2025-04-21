@@ -94,6 +94,7 @@ export default [
         route("/coretax", "routes/cs/cs-coretax.tsx"),
         route("/reports", "routes/cs/cs-report.tsx"),
         route("/print", "routes/cs/cs-print.tsx"),
+        route("/ymma-schedule", "routes/cs/ymma/ymma.tsx"),
       ]),
     ]),
     layout("routes/purchasing/purchasing.layout.tsx", [

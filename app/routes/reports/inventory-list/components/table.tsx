@@ -58,14 +58,12 @@ export function Table() {
           align: "right",
         },
         accessorFn: (row) => (
-          <Group>
-            <NumberFormatter
-              thousandSeparator
-              decimalScale={6}
-              fixedDecimalScale
-              value={row.remaining_qty}
-            />
-          </Group>
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={6}
+            fixedDecimalScale
+            value={row.remaining_qty}
+          />
         ),
       },
       {
@@ -77,14 +75,12 @@ export function Table() {
           align: "right",
         },
         accessorFn: (row) => (
-          <Group>
-            <NumberFormatter
-              thousandSeparator
-              value={row.actual_qty}
-              decimalScale={6}
-              fixedDecimalScale
-            />
-          </Group>
+          <NumberFormatter
+            thousandSeparator
+            value={row.actual_qty}
+            decimalScale={6}
+            fixedDecimalScale
+          />
         ),
       },
       {
