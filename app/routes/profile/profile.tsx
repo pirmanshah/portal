@@ -6,6 +6,7 @@ import HeaderSection from "./components/headerSection";
 import GeneralSection from "./components/generalSection";
 import SecuritySection from "./components/securitySection";
 import PreferenceSection from "./components/preferenceSection";
+import LockScreenSettings from "./components/lockscreen";
 
 export default function ProfileIndex() {
   const user = useUserInfo();
@@ -18,6 +19,7 @@ export default function ProfileIndex() {
           <GeneralSection user={user} />
           <SecuritySection />
           <PreferenceSection />
+          <LockScreenSettings />
         </Stack>
       </Paper>
     </Fragment>

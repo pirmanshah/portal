@@ -7,7 +7,7 @@ export default function SecuritySection() {
   return (
     <Paper p="sm" withBorder>
       <Text mb={5} size="md" fw={500}>
-        Security 🔐
+        Security 🔑
       </Text>
       <Text size="sm">Secure passwords help protect your account. </Text>
       <Space h="md" />

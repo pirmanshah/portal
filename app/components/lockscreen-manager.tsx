@@ -13,6 +13,7 @@ export default function LockScreenManager({ children }: Props) {
   const enableLockScreen = useLockScreenStore(
     (state) => state.enableLockScreen
   );
+  const lockTimeout = useLockScreenStore((state) => state.lockTimeout);
   const lock = useLockScreenStore((state) => state.lock);
   const unlock = useLockScreenStore((state) => state.unlock);
 
@@ -23,7 +24,7 @@ export default function LockScreenManager({ children }: Props) {
   useIdleTimer({
     debounce: 500,
     onIdle: handleOnIdle,
-    timeout: 1000 * 60 * 5,
+    timeout: 1000 * 60 * lockTimeout, // pakai dynamic timeout
   });
 
   return (
