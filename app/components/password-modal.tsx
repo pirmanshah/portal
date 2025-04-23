@@ -9,7 +9,7 @@ import {
   Center,
 } from "@mantine/core";
 import { useState } from "react";
-import { IconLockOpen2, IconLogout } from "@tabler/icons-react";
+import { IconLockOpen2 } from "@tabler/icons-react";
 import { useUserInfo } from "#app/hooks/use-user-info";
 import { useLockScreenStore } from "#app/store/lockscreen-store";
 interface Props {
@@ -70,15 +70,6 @@ export default function PasswordModal({ isOpen, onUnlock }: Props) {
           />
         </Stack>
         <Group gap="xs" justify="center" mt="md">
-          <Button
-            radius="xl"
-            color="gray"
-            variant="subtle"
-            onClick={handleSubmit}
-            leftSection={<IconLogout size={18} stroke={1.8} />}
-          >
-            Logout
-          </Button>
           <Button
             radius="xl"
             onClick={handleSubmit}

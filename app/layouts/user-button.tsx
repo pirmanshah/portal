@@ -11,6 +11,7 @@ import {
   IconLogout,
   IconUserCircle,
   IconChevronRight,
+  IconLock,
 } from "@tabler/icons-react";
 import { Link } from "react-router";
 import { useDisclosure } from "@mantine/hooks";
@@ -18,6 +19,7 @@ import { useDisclosure } from "@mantine/hooks";
 import classes from "./user-button.module.css";
 import { useSignOut } from "#app/hooks/use-auth";
 import { ConfirmationModal } from "#app/components/confirmation-modal";
+import { useLockScreenStore } from "#app/store/lockscreen-store";
 
 type UserButtonProps = {
   onlyAvatar?: boolean;
@@ -32,6 +34,9 @@ export function UserButton({
 }: UserButtonProps) {
   const { mutateAsync, isPending } = useSignOut();
   const [opened, { open, close }] = useDisclosure(false);
+
+  const enableLockScreen = useLockScreenStore((s) => s.enableLockScreen);
+  const lock = useLockScreenStore((s) => s.lock);
 
   const handleSignOut = () => {
     mutateAsync().finally(() => close());
@@ -104,6 +109,16 @@ export function UserButton({
           >
             Profile
           </Menu.Item>
+
+          {enableLockScreen && (
+            <Menu.Item
+              onClick={lock}
+              leftSection={<IconLock size="1.3rem" stroke={1.5} />}
+            >
+              Lock screen
+            </Menu.Item>
+          )}
+
           <Menu.Item
             color="red"
             onClick={open}
