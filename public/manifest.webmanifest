@@ -21,5 +21,5 @@
     { "src": "/icon-180x180.png", "sizes": "180x180", "type": "image/png" }
   ],
   "theme_color": "#171717",
-  "orientation": "landscape"
+  "orientation": "any"
 }
