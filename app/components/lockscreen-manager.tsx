@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useIdleTimer } from "react-idle-timer";
 
 import PasswordModal from "./password-modal";
@@ -21,11 +21,15 @@ export default function LockScreenManager({ children }: Props) {
     if (enableLockScreen) lock();
   };
 
-  useIdleTimer({
-    debounce: 500,
+  const { reset, pause, resume } = useIdleTimer({
     onIdle: handleOnIdle,
-    timeout: 1000 * 60 * lockTimeout, // pakai dynamic timeout
+    timeout: 1000 * 60 * lockTimeout,
+    debounce: 500,
   });
+
+  useEffect(() => {
+    reset(); // ⏱️ restart timer saat lockTimeout berubah
+  }, [lockTimeout, reset]);
 
   return (
     <>

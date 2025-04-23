@@ -91,7 +91,7 @@ export default function PasswordModal({ isOpen, onUnlock }: Props) {
         <Center ta="center" mt="md">
           <Text size="xs" c="dimmed">
             Copyright {new Date().getFullYear()} PT. S-IK Indonesia. <br />{" "}
-            Develop by IT Division🛠
+            Develop by IT Division 🛠
           </Text>
         </Center>
       </Stack>
