@@ -28,7 +28,7 @@ export default function PreferenceSection() {
       <Text mb={5} size="md" fw={500}>
         Preferences 🎨
       </Text>
-      <Text size="sm">Manage settings for the S-IK App.</Text>
+      <Text size="sm">Manage app settings.</Text>
       <Space h="md" />
 
       <Menu shadow="md" width={220} withArrow>
