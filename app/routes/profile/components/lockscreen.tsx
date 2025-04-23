@@ -9,6 +9,7 @@ import {
   PasswordInput,
   Paper,
   Space,
+  Tooltip,
 } from "@mantine/core";
 import { IconLock, IconClock, IconKey } from "@tabler/icons-react";
 import { useState } from "react";
@@ -24,11 +25,28 @@ export default function LockScreenSettings() {
   } = useLockScreenStore();
 
   const [newPassword, setNewPassword] = useState(password || "");
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+
+  const handleToggleLock = () => {
+    if (!enableLockScreen) {
+      // Trying to enable, check password
+      if (newPassword.length < 4) {
+        setPasswordError(
+          "Please set a password with at least 4 characters before enabling."
+        );
+        return;
+      } else {
+        setPassword(newPassword);
+        setPasswordError(null);
+      }
+    }
+    toggleLockScreen();
+  };
 
   return (
     <Paper p="sm" withBorder>
       <Text mb={5} size="md" fw={500}>
-        Lock Screen (Beta) 🔒
+        Lock Screen 🔒
       </Text>
       <Text size="sm">Control lock screen behavior and security.</Text>
       <Space h="md" />
@@ -48,7 +66,19 @@ export default function LockScreenSettings() {
           </Group>
         </Grid.Col>
         <Grid.Col span="content">
-          <Switch checked={enableLockScreen} onChange={toggleLockScreen} />
+          <Tooltip
+            label={
+              !enableLockScreen && newPassword.length < 4
+                ? "Set a valid password before enabling lockscreen"
+                : "Toggle lockscreen"
+            }
+            disabled={enableLockScreen || newPassword.length >= 4}
+            withArrow
+          >
+            <div>
+              <Switch checked={enableLockScreen} onChange={handleToggleLock} />
+            </div>
+          </Tooltip>
         </Grid.Col>
       </Grid>
 
@@ -58,13 +88,14 @@ export default function LockScreenSettings() {
         label="Lockscreen Password"
         placeholder="Enter password"
         value={newPassword}
-        onChange={(event) => setNewPassword(event.currentTarget.value)}
-        onBlur={() => {
-          if (newPassword.length >= 4) {
-            setPassword(newPassword);
-          }
+        onChange={(event) => {
+          const value = event.currentTarget.value;
+          setNewPassword(value);
+          setPassword(value);
         }}
-        description="At least 4 characters. Changes on blur."
+        error={passwordError}
+        onFocus={() => setPasswordError(null)}
+        description="At least 4 characters required."
         leftSection={<IconKey size={14} />}
       />
 
