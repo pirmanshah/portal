@@ -1,31 +1,30 @@
 import {
   MantineReactTable,
   type MRT_ColumnDef,
+  type MRT_ColumnPinningState,
+  MRT_ProgressBar,
   useMantineReactTable,
 } from "mantine-react-table";
 import dayjs from "dayjs";
-import { useMemo } from "react";
-import { NumberFormatter, Text } from "@mantine/core";
+import { useMemo, useState } from "react";
+import { Box, Group, NumberFormatter, Text } from "@mantine/core";
 
 import ToolbarIncoming from "./toolbar-incoming";
 import { useIncomingQuery } from "../hooks/use-incoming";
-import type { Incoming } from "../types/receipt.create.types";
 import { createTableOptions } from "#app/utils/createTableOptions";
+import type { Incoming } from "../types/Incoming";
+import { TitleTable } from "#app/components/title-table";
 
-type IncomingTableProps = {
-  onClose: () => void;
-  addToReceipt: (rows: Incoming[]) => void;
-};
-
-export default function IncomingTable({
-  addToReceipt,
-  onClose,
-}: IncomingTableProps) {
-  const { data, isFetching, refetch } = useIncomingQuery();
+export default function IncomingTable() {
+  const { data, isFetching, refetch, isError, isLoading } = useIncomingQuery();
+  const [columnPinning, setColumnPinning] = useState<MRT_ColumnPinningState>({
+    left: [],
+  });
 
   const columns = useMemo<MRT_ColumnDef<Incoming>[]>(
     () => [
       {
+        size: 135,
         header: "Date",
         id: "delivery_date",
         filterVariant: "date",
@@ -39,6 +38,7 @@ export default function IncomingTable({
         Cell: ({ cell }) => dayjs(cell.getValue<Date>()).format("DD-MM-YYYY"),
       },
       {
+        size: 120,
         accessorFn: (originalRow) => {
           const itemCode = originalRow.item_code;
           return itemCode?.startsWith("L", 0) ? "S-IK 2" : "S-IK 1";
@@ -58,15 +58,17 @@ export default function IncomingTable({
         },
       },
       {
+        size: 135,
         header: "PO No.",
         accessorKey: "po_number",
         filterFn: "customFilterFn",
         accessorFn: ({ po_number }) => po_number ?? "",
       },
       {
+        size: 135,
         accessorKey: "order_number",
         filterFn: "contains",
-        header: "Order Number",
+        header: "Order No.",
       },
       {
         accessorKey: "item_code",
@@ -79,6 +81,7 @@ export default function IncomingTable({
         header: "Item Name",
       },
       {
+        size: 135,
         id: "schedule_qty",
         header: "Schedule Qty",
         filterFn: "customFilterFn",
@@ -95,6 +98,7 @@ export default function IncomingTable({
         ),
       },
       {
+        size: 135,
         id: "actual_qty",
         header: "Actual Qty",
         filterFn: "customFilterFn",
@@ -122,6 +126,7 @@ export default function IncomingTable({
         header: "Original Name",
       },
       {
+        size: 220,
         accessorKey: "supplier_name",
         filterFn: "customFilterFn",
         header: "Supplier",
@@ -154,53 +159,33 @@ export default function IncomingTable({
     ...createTableOptions<Incoming>(),
     data: data ?? [],
     columns,
-    enablePagination: false,
+    memoMode: "cells",
     enableRowActions: false,
-    enableRowSelection: true,
+    enableRowSelection: false,
+    enableColumnPinning: true,
+    enableColumnResizing: false,
     enableRowVirtualization: true,
-    initialState: {
-      showColumnFilters: true,
-      isLoading: isFetching,
-      columnPinning: {
-        left: [
-          "mrt-row-select",
-          "mrt-row-numbers",
-          "delivery_date",
-          "location",
-        ],
-      },
-    },
+    onColumnPinningChange: setColumnPinning,
     state: {
+      columnPinning,
       showColumnFilters: true,
-      isLoading: isFetching,
-      columnPinning: {
-        left: [
-          "mrt-row-select",
-          "mrt-row-numbers",
-          "delivery_date",
-          "location",
-        ],
+      showAlertBanner: isError,
+      showProgressBars: isFetching || isLoading,
+    },
+    displayColumnDefOptions: {
+      "mrt-row-numbers": {
+        size: 10,
       },
     },
-    mantineTableBodyRowProps: ({ row }) => ({
-      onClick: row.getToggleSelectedHandler(),
-      sx: { cursor: "pointer" },
-    }),
-    renderToolbarInternalActions: ({ table }) => (
-      <ToolbarIncoming
-        table={table}
-        onClose={onClose}
-        onRefresh={() => refetch()}
-        addToReceipt={addToReceipt}
-      />
+    renderTopToolbar: ({ table }) => (
+      <Box pos="relative">
+        <Group mt={-5} mb={2} justify="space-between">
+          <TitleTable title={`Incoming Schedule 🚚`} hideArrow />
+          <ToolbarIncoming table={table} onRefresh={() => refetch()} />
+        </Group>
+        <MRT_ProgressBar table={table} isTopToolbar size="sm" />
+      </Box>
     ),
-    mantinePaperProps: {
-      p: 0,
-      radius: "none",
-      shadow: "none",
-      withBorder: false,
-    },
-    mantineTableContainerProps: { style: { height: "75vh" } },
   });
 
   return <MantineReactTable table={table} />;

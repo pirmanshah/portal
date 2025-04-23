@@ -21,6 +21,10 @@ export default [
     layout("routes/warehouse/warehouse.layout.tsx", [
       ...prefix("warehouse", [
         route("/inventory", "routes/warehouse/inventory/inventory-wh.tsx"),
+        route(
+          "/incoming-schedule",
+          "routes/warehouse/incoming-schedule/incoming-schedule.tsx"
+        ),
         route("/receipt", "routes/warehouse/receipt/receipt.tsx"),
         route(
           "/receipt/:code/detail",
@@ -86,6 +90,7 @@ export default [
       ),
       route("/balance-po", "routes/reports/balance-po/balance-po.tsx"),
       route("/work-in-process", "routes/reports/wip/wip.tsx"),
+      route("/inventory", "routes/reports/inventory/inventory.tsx"),
     ]),
     layout("routes/accounting/accounting.layout.tsx", [
       ...prefix("accounting", [

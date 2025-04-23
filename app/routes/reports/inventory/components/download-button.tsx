@@ -4,11 +4,11 @@ import * as ExcelJS from "exceljs";
 import { Button } from "@mantine/core";
 import { type MRT_Row } from "mantine-react-table";
 import { IconDownload } from "@tabler/icons-react";
-import type { PurchaseReceipt } from "../types/PurchaseReceipt";
+import type { InventoryList } from "../types/InventoryList";
 
 interface DownloadProps {
   disabled: boolean;
-  rows: MRT_Row<PurchaseReceipt>[];
+  rows: MRT_Row<InventoryList>[];
 }
 
 export function Download({ rows, disabled = false }: DownloadProps) {
@@ -16,11 +16,11 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
   const exportToExcel = async () => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet("Purchase_Receipt");
+    const worksheet = workbook.addWorksheet("Inventory");
 
     worksheet.autoFilter = {
-      from: { row: 7, column: 2 },
-      to: { row: 7, column: 13 },
+      from: { row: 7, column: 2 }, // Mulai dari B7
+      to: { row: 7, column: 20 }, // Sampai O7
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -44,7 +44,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     worksheet.getCell("A5").value = "Export Date";
     worksheet.getCell("A5").alignment = { horizontal: "left" };
 
-    worksheet.getCell("C4").value = "Purchase Receipt"; // App name here
+    worksheet.getCell("C4").value = "Inventory"; // App name here
     worksheet.getCell("C4").border = { bottom: { style: "thin" } };
 
     worksheet.getCell("C5").value = dayjs(new Date()).format("DD MMMM YYYY"); // Export date here
@@ -66,59 +66,54 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         width: 30,
       },
       {
-        header: "Item Name",
-        key: "item_name",
-        width: 40,
-      },
-      {
-        header: "Order No.",
-        key: "order_number",
-        width: 20,
-      },
-      {
-        header: "User",
-        key: "user_created",
-        width: 20,
-      },
-      {
-        header: "Remark",
-        key: "remarks",
-        width: 20,
-      },
-      {
-        header: "Supplier",
-        key: "supplier",
-        width: 20,
-      },
-      {
-        header: "Supplier Name",
-        key: "supplier_name",
-        width: 30,
-      },
-      {
-        header: "Store Location",
-        key: "storage_location",
-        width: 20,
-      },
-      {
-        header: "Qty",
-        key: "actual_qty",
+        header: "Material",
+        key: "material",
         width: 15,
       },
       {
-        header: "Unit",
-        key: "unit",
-        width: 15,
+        header: "Grade",
+        key: "grade",
+        width: 20,
+      },
+      {
+        header: "Color Code",
+        key: "color_code",
+        width: 20,
       },
       {
         header: "Lot No.",
         key: "lot_number",
+        width: 20,
+      },
+      {
+        header: "Opening",
+        key: "opening",
         width: 15,
       },
       {
-        header: "General Pur. Note",
-        key: "remark_general",
-        width: 40,
+        header: "IN",
+        key: "qty_in",
+        width: 15,
+      },
+      {
+        header: "Out",
+        key: "qty_out",
+        width: 15,
+      },
+      {
+        header: "Ending",
+        key: "ending_balance",
+        width: 15,
+      },
+      {
+        header: "Price",
+        key: "price",
+        width: 15,
+      },
+      {
+        header: "Amount",
+        key: "amount",
+        width: 15,
       },
     ];
 
@@ -152,9 +147,14 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         const cell = row.getCell(colIndex + 1);
         if (col.key === "no") {
           cell.value = rowIndex + 1;
-        } else if (col.key === "user_created") {
-          cell.value = item.user_created?.fullname;
-        } else if (col.key === "actual_qty") {
+        } else if (
+          col.key === "opening" ||
+          col.key === "qty_in" ||
+          col.key === "qty_out" ||
+          col.key === "ending_balance" ||
+          col.key === "price" ||
+          col.key === "amount"
+        ) {
           cell.value = Number((item as any)[col.key]);
         } else if (col.key.includes("date")) {
           cell.value = dayjs((item as any)[col.key]).format("DD/MM/YYYY");
@@ -166,7 +166,14 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         // Assign cell alignment
         if (col.key === "no" || col.key === "branch_number") {
           cell.alignment = { vertical: "middle", horizontal: "center" };
-        } else if (col.key === "actual_qty") {
+        } else if (
+          col.key === "opening" ||
+          col.key === "qty_in" ||
+          col.key === "qty_out" ||
+          col.key === "ending_balance" ||
+          col.key === "price" ||
+          col.key === "amount"
+        ) {
           cell.alignment = { vertical: "middle", horizontal: "right" };
         } else {
           cell.alignment = { vertical: "middle", horizontal: "left" };
@@ -193,7 +200,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
       link.download =
-        "purchase_receipt_" + dayjs(new Date()).format("DDMMYYHHmm") + ".xlsx";
+        "inventory_" + dayjs(new Date()).format("DDMMYYHHmm") + ".xlsx";
       link.click();
     });
   };

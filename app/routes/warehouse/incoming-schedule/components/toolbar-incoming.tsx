@@ -1,42 +1,35 @@
+import { Button, Divider, Group } from "@mantine/core";
+import { IconRefresh } from "@tabler/icons-react";
 import {
-  type MRT_TableInstance,
   MRT_ShowHideColumnsButton,
   MRT_ToggleFullScreenButton,
+  type MRT_TableInstance,
 } from "mantine-react-table";
-import { Button, Divider, Group } from "@mantine/core";
-import { IconRefresh, IconUserPlus } from "@tabler/icons-react";
-import type { User } from "../types/User";
+import type { Incoming } from "../types/Incoming";
+import { Download } from "./download-button";
 
 type ToolbarActionProps = {
   onRefresh: () => void;
-  table: MRT_TableInstance<User>;
-  onClickNew: () => void;
+  table: MRT_TableInstance<Incoming>;
 };
 
-export default function TopToolbar({
+export default function ToolbarIncoming({
   table,
   onRefresh,
-  onClickNew,
 }: ToolbarActionProps) {
   return (
     <Group p={5} gap={5} align="center">
-      <Button
-        size="xs"
-        color="gray"
-        variant="subtle"
-        onClick={onClickNew}
-        leftSection={<IconUserPlus size={20} />}
-      >
-        Add a user
-      </Button>
+      <Download
+        rows={table.getRowModel().rows}
+        disabled={table.getRowModel().rows.length === 0}
+      />
       <Divider orientation="vertical" />
-
       <Button
         size="xs"
         color="gray"
         variant="subtle"
         onClick={onRefresh}
-        leftSection={<IconRefresh size={20} />}
+        leftSection={<IconRefresh size={21.5} />}
       >
         Refresh
       </Button>

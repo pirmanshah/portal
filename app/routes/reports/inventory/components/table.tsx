@@ -11,7 +11,7 @@ import { Box, Group, NumberFormatter } from "@mantine/core";
 import TopToolbar from "./toolbar";
 import { useQueryData } from "../hooks/use-query";
 import { TitleTable } from "#app/components/title-table";
-import { type PurchaseReceipt } from "../types/PurchaseReceipt";
+import { type InventoryList } from "../types/InventoryList";
 import { createTableOptions } from "#app/utils/createTableOptions";
 
 export function Table() {
@@ -20,7 +20,7 @@ export function Table() {
     left: [],
   });
 
-  const columns = useMemo<MRT_ColumnDef<PurchaseReceipt>[]>(
+  const columns = useMemo<MRT_ColumnDef<InventoryList>[]>(
     () => [
       {
         accessorKey: "item_code",
@@ -28,13 +28,18 @@ export function Table() {
         filterFn: "customFilterFn",
       },
       {
-        accessorKey: "item_name",
-        header: "Description",
+        accessorKey: "material",
+        header: "Material",
         filterFn: "customFilterFn",
       },
       {
-        accessorKey: "remark_general",
-        header: "General Note",
+        accessorKey: "grade",
+        header: "Grade",
+        filterFn: "customFilterFn",
+      },
+      {
+        accessorKey: "color_code",
+        header: "Color Code",
         filterFn: "customFilterFn",
       },
       {
@@ -43,67 +48,95 @@ export function Table() {
         filterFn: "customFilterFn",
       },
       {
-        accessorKey: "supplier",
-        header: "Supplier",
-        filterFn: "equals",
-        filterVariant: "select",
-      },
-      {
-        accessorKey: "supplier_name",
-        header: "Supplier Name",
-        filterFn: "customFilterFn",
-      },
-      {
-        accessorKey: "storage_location",
-        header: "Storage Location",
-        filterFn: "customFilterFn",
-      },
-      {
-        id: "actual_qty",
-        header: "Actual Qty",
+        id: "opening",
+        header: "Opening",
         filterFn: "contains",
         mantineTableBodyCellProps: { align: "right" },
         accessorFn: (row) => (
           <NumberFormatter
             thousandSeparator
-            decimalScale={6}
+            decimalScale={4}
             fixedDecimalScale
-            value={row.actual_qty}
+            value={row.opening}
           />
         ),
       },
       {
-        accessorKey: "unit",
-        header: "Unit",
-        filterFn: "customFilterFn",
+        id: "qty_in",
+        header: "IN",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={4}
+            fixedDecimalScale
+            value={row.qty_in}
+          />
+        ),
       },
       {
-        header: "Created By",
-        filterFn: "customFilterFn",
-        accessorKey: "user_created",
-        accessorFn: (row) => row.user_created?.fullname,
+        id: "qty_out",
+        header: "Out",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={4}
+            fixedDecimalScale
+            value={row.qty_out}
+          />
+        ),
       },
       {
-        accessorKey: "order_number",
-        header: "Order No.",
-        filterFn: "customFilterFn",
+        id: "ending_balance",
+        header: "Ending",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={4}
+            fixedDecimalScale
+            value={row.ending_balance}
+          />
+        ),
       },
       {
-        accessorKey: "packing_slip",
-        header: "Packing Slip",
-        filterFn: "customFilterFn",
+        id: "price",
+        header: "Price",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={4}
+            fixedDecimalScale
+            value={row.price}
+          />
+        ),
       },
       {
-        accessorKey: "remarks",
-        header: "Remarks",
-        filterFn: "customFilterFn",
+        id: "amount",
+        header: "Amount",
+        filterFn: "contains",
+        mantineTableBodyCellProps: { align: "right" },
+        accessorFn: (row) => (
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={4}
+            fixedDecimalScale
+            value={row.amount}
+          />
+        ),
       },
     ],
     []
   );
 
   const table = useMantineReactTable({
-    ...createTableOptions<PurchaseReceipt>(),
+    ...createTableOptions<InventoryList>(),
     data: data ?? [],
     columns,
     memoMode: "cells",
@@ -131,7 +164,7 @@ export function Table() {
     renderTopToolbar: ({ table }) => (
       <Box pos="relative">
         <Group mt={-5} mb={2} justify="space-between">
-          <TitleTable title={`Purchase Receipt 📋`} hideArrow={false} />
+          <TitleTable title={`Inventory 📋`} hideArrow={false} />
           <TopToolbar table={table} onRefresh={() => refetch()} />
         </Group>
         <MRT_ProgressBar table={table} isTopToolbar size="sm" />

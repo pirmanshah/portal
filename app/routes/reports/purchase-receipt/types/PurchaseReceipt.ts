@@ -9,6 +9,7 @@ export type PurchaseReceipt = {
   remark_general: string | null;
   packing_slip: string | null;
   supplier: string;
+  supplier_name: string;
   storage_location: string;
   actual_qty: number;
   unit: string;

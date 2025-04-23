@@ -6,7 +6,7 @@ import {
   type MRT_ColumnPinningState,
 } from "mantine-react-table";
 import { useMemo, useState } from "react";
-import { Box, Group, NumberFormatter } from "@mantine/core";
+import { Box, Group, NumberFormatter, Text } from "@mantine/core";
 
 import TopToolbar from "./toolbar";
 import { useQueryData } from "../hooks/use-query";
@@ -82,6 +82,30 @@ export function Table() {
             fixedDecimalScale
           />
         ),
+        Footer: ({ table }) => (
+          <Group
+            justify="space-between"
+            style={{ marginTop: -10, marginBottom: -10 }}
+          >
+            <Text fz={11.5} c="dimmed">
+              Total:
+            </Text>
+            <Text fz={11.5} c="dimmed">
+              <NumberFormatter
+                decimalScale={6}
+                fixedDecimalScale
+                value={table
+                  .getRowModel()
+                  .rows.reduce(
+                    (sum, item) =>
+                      Number(sum) + Number(item.original.actual_qty),
+                    0
+                  )}
+                thousandSeparator=","
+              />
+            </Text>
+          </Group>
+        ),
       },
       {
         id: "completion_date",
@@ -139,11 +163,9 @@ export function Table() {
     enableColumnPinning: true,
     enableRowDragging: false,
     enableColumnResizing: false,
-    enableRowVirtualization: false,
-    enablePagination: true,
+    enableRowVirtualization: true,
     enableBottomToolbar: true,
     onColumnPinningChange: setColumnPinning,
-    initialState: { pagination: { pageSize: 25, pageIndex: 0 } },
     state: {
       columnPinning,
       showColumnFilters: true,
@@ -158,7 +180,7 @@ export function Table() {
     renderTopToolbar: ({ table }) => (
       <Box pos="relative">
         <Group mt={-5} mb={2} justify="space-between">
-          <TitleTable title={`Inventory List 📋`} hideArrow={false} />
+          <TitleTable title={`Inventory List by Lot 📋`} hideArrow={false} />
           <TopToolbar table={table} onRefresh={() => refetch()} />
         </Group>
         <MRT_ProgressBar table={table} isTopToolbar size="sm" />

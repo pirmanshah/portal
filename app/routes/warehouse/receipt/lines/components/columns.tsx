@@ -35,6 +35,26 @@ export function generateColumns(): MRT_ColumnDef<ReceiptLine>[] {
       enableEditing: false,
     },
     {
+      size: 120,
+      accessorFn: (originalRow) => {
+        const itemCode = originalRow.item_code;
+        return itemCode?.startsWith("L", 0) ? "S-IK 2" : "S-IK 1";
+      },
+      id: "location",
+      header: "Plant",
+      enableSorting: false,
+      filterVariant: "select",
+      filterFn: "equals",
+      columnFilterModeOptions: ["equals"],
+      mantineFilterSelectProps: {
+        data: ["S-IK 1", "S-IK 2"],
+      },
+      Cell: ({ row }) => {
+        const itemCode = row.original?.item_code;
+        return itemCode?.startsWith("L", 0) ? "S-IK 2" : "S-IK 1";
+      },
+    },
+    {
       header: "Code",
       accessorKey: "code",
       filterFn: "equals",
@@ -179,6 +199,17 @@ export function generateColumns(): MRT_ColumnDef<ReceiptLine>[] {
     {
       header: "PO No.",
       accessorKey: "po_number",
+      filterFn: "customFilterFn",
+    },
+    {
+      accessorKey: "supplier",
+      header: "Supplier",
+      filterFn: "equals",
+      filterVariant: "select",
+    },
+    {
+      accessorKey: "supplier_name",
+      header: "Supplier Name",
       filterFn: "customFilterFn",
     },
     {

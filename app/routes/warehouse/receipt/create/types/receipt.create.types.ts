@@ -42,6 +42,7 @@ export type Incoming = {
   general_note?: string | null;
   item_code: string;
   item_name: string;
+  original_name: string;
   lot_number: string | null;
   maker_lot_number: string | null;
   item_category: string;

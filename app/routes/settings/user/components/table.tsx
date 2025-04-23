@@ -7,35 +7,34 @@ import {
 } from "mantine-react-table";
 import { useDisclosure } from "@mantine/hooks";
 import { useCallback, useMemo, useState } from "react";
-import { Affix, Group, Button, Transition, Box } from "@mantine/core";
+import { Box, Affix, Group, Drawer, Transition } from "@mantine/core";
 
 import TopToolbar from "./toolbar";
+import { UserForm } from "./user-form";
+import type { User } from "../types/User";
 import { RowActions } from "./row-actions";
 import { generateColumns } from "./columns";
 import { TitleTable } from "#app/components/title-table";
 import { createTableOptions } from "#app/utils/createTableOptions";
-import { ConfirmationModal } from "#app/components/confirmation-modal";
-import { useUserQuery } from "../hooks/use-issued";
-import type { User } from "../types/User";
+import { useCreateUserMutation, useUserQuery } from "../hooks/use-user-query";
 
 export function UserTable() {
-  const [opened, { open, close }] = useDisclosure(false);
-  const [deletedItem, setDeletedItem] = useState<string | null>(null);
+  const [openedCreate, { open: openCreate, close: closeCreate }] =
+    useDisclosure(false);
   const [columnPinning, setColumnPinning] = useState<MRT_ColumnPinningState>({
     left: [],
   });
 
   const { data = [], refetch, isFetching, isLoading, isError } = useUserQuery();
 
+  const createUserMutation = useCreateUserMutation(() => {
+    closeCreate();
+  });
+
   const tableOptions = useMemo(() => createTableOptions<User>(), []);
   const columns = useMemo(() => generateColumns(), []);
 
   const handleRefresh = useCallback(() => refetch(), [refetch]);
-
-  const onClickDelete = (id: string) => {
-    setDeletedItem(id);
-    open();
-  };
 
   const table = useMantineReactTable({
     ...tableOptions,
@@ -67,18 +66,30 @@ export function UserTable() {
       <Box pos="relative">
         <Group mt={-5} mb={2} justify="space-between">
           <TitleTable title="Manage Users ⚙️" backUrl="/settings" />
-          <TopToolbar table={table} onRefresh={handleRefresh} />
+          <TopToolbar
+            table={table}
+            onRefresh={handleRefresh}
+            onClickNew={openCreate}
+          />
         </Group>
         <MRT_ProgressBar table={table} isTopToolbar size="sm" />
       </Box>
     ),
     renderRowActions: ({ row }) => (
-      <RowActions row={row} onDelete={onClickDelete} />
+      <RowActions row={row} onDelete={() => null} />
     ),
   });
 
   return (
     <>
+      <Drawer opened={openedCreate} onClose={closeCreate} title="Add a user">
+        <UserForm
+          onSubmit={async (values) => {
+            await createUserMutation.mutateAsync(values);
+          }}
+          isLoading={createUserMutation.isPending}
+        />
+      </Drawer>
       <MantineReactTable table={table} />
       <Affix position={{ bottom: 15, right: 15 }}>
         <Transition transition="slide-up" mounted>

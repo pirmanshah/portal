@@ -3,32 +3,24 @@ import {
   MRT_ShowHideColumnsButton,
   MRT_ToggleFullScreenButton,
 } from "mantine-react-table";
+import { IconRefresh } from "@tabler/icons-react";
 import { Button, Divider, Group } from "@mantine/core";
-import { IconRefresh, IconUserPlus } from "@tabler/icons-react";
-import type { User } from "../types/User";
+import { type InventoryList } from "../types/InventoryList";
+import { Download } from "./download-button";
 
 type ToolbarActionProps = {
   onRefresh: () => void;
-  table: MRT_TableInstance<User>;
-  onClickNew: () => void;
+  table: MRT_TableInstance<InventoryList>;
 };
 
-export default function TopToolbar({
-  table,
-  onRefresh,
-  onClickNew,
-}: ToolbarActionProps) {
+export default function TopToolbar({ table, onRefresh }: ToolbarActionProps) {
   return (
-    <Group p={5} gap={5} align="center">
-      <Button
-        size="xs"
-        color="gray"
-        variant="subtle"
-        onClick={onClickNew}
-        leftSection={<IconUserPlus size={20} />}
-      >
-        Add a user
-      </Button>
+    <Group gap={5} align="center">
+      <Download
+        //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
+        rows={table.getPrePaginationRowModel().rows}
+        disabled={table.getPrePaginationRowModel().rows.length === 0}
+      />
       <Divider orientation="vertical" />
 
       <Button

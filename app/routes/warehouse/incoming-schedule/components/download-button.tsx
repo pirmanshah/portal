@@ -4,11 +4,11 @@ import * as ExcelJS from "exceljs";
 import { Button } from "@mantine/core";
 import { type MRT_Row } from "mantine-react-table";
 import { IconDownload } from "@tabler/icons-react";
-import type { PurchaseReceipt } from "../types/PurchaseReceipt";
+import type { Incoming } from "../types/Incoming";
 
 interface DownloadProps {
   disabled: boolean;
-  rows: MRT_Row<PurchaseReceipt>[];
+  rows: MRT_Row<Incoming>[];
 }
 
 export function Download({ rows, disabled = false }: DownloadProps) {
@@ -16,11 +16,11 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
   const exportToExcel = async () => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet("Purchase_Receipt");
+    const worksheet = workbook.addWorksheet("Incoming");
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 },
-      to: { row: 7, column: 13 },
+      to: { row: 7, column: 27 },
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -44,7 +44,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     worksheet.getCell("A5").value = "Export Date";
     worksheet.getCell("A5").alignment = { horizontal: "left" };
 
-    worksheet.getCell("C4").value = "Purchase Receipt"; // App name here
+    worksheet.getCell("C4").value = "Incoming Schedule"; // App name here
     worksheet.getCell("C4").border = { bottom: { style: "thin" } };
 
     worksheet.getCell("C5").value = dayjs(new Date()).format("DD MMMM YYYY"); // Export date here
@@ -55,71 +55,33 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     // Define columns manually
     const columns = [
-      {
-        header: "No.",
-        key: "no",
-        width: 5,
-      },
-      {
-        header: "Item Code",
-        key: "item_code",
-        width: 30,
-      },
-      {
-        header: "Item Name",
-        key: "item_name",
-        width: 40,
-      },
-      {
-        header: "Order No.",
-        key: "order_number",
-        width: 20,
-      },
-      {
-        header: "User",
-        key: "user_created",
-        width: 20,
-      },
-      {
-        header: "Remark",
-        key: "remarks",
-        width: 20,
-      },
-      {
-        header: "Supplier",
-        key: "supplier",
-        width: 20,
-      },
-      {
-        header: "Supplier Name",
-        key: "supplier_name",
-        width: 30,
-      },
-      {
-        header: "Store Location",
-        key: "storage_location",
-        width: 20,
-      },
-      {
-        header: "Qty",
-        key: "actual_qty",
-        width: 15,
-      },
-      {
-        header: "Unit",
-        key: "unit",
-        width: 15,
-      },
-      {
-        header: "Lot No.",
-        key: "lot_number",
-        width: 15,
-      },
-      {
-        header: "General Pur. Note",
-        key: "remark_general",
-        width: 40,
-      },
+      { header: "No.", key: "no", width: 5 },
+      { header: "Order Number", key: "order_number", width: 20 },
+      { header: "PO No.", key: "po_number", width: 20 },
+      { header: "General Note", key: "general_note", width: 20 },
+      { header: "Item Code", key: "item_code", width: 20 },
+      { header: "Item Name", key: "item_name", width: 25 },
+      { header: "Lot Number", key: "lot_number", width: 20 },
+      { header: "Maker Lot Number", key: "maker_lot_number", width: 20 },
+      { header: "Item Category", key: "item_category", width: 20 },
+      { header: "Branch Number", key: "branch_number", width: 15 },
+      { header: "Partial Number", key: "partial_number", width: 15 },
+      { header: "Schedule Qty", key: "schedule_qty", width: 15 },
+      { header: "Actual Qty", key: "actual_qty", width: 15 },
+      { header: "Unit", key: "unit", width: 10 },
+      { header: "Original Name", key: "original_name", width: 30 },
+      { header: "Storage Location", key: "storage_location", width: 20 },
+      { header: "Storage Loc. Name", key: "storage_location_name", width: 25 },
+      { header: "Work Center", key: "work_center", width: 20 },
+      { header: "Work Center Name", key: "work_center_name", width: 25 },
+      { header: "Supplier", key: "supplier", width: 20 },
+      { header: "Supplier Name", key: "supplier_name", width: 25 },
+      { header: "Material Status", key: "material_status", width: 20 },
+      { header: "Grade", key: "grade", width: 15 },
+      { header: "Color Index", key: "color_index", width: 15 },
+      { header: "Currency", key: "currency", width: 10 },
+      { header: "Note", key: "note", width: 20 },
+      { header: "Delivery Date", key: "delivery_date", width: 20 },
     ];
 
     // Add table header manually
@@ -145,33 +107,39 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     headerRow.height = 20.5;
     headerRow.commit();
 
-    // Add data rows manually
     for (const [rowIndex, item] of data.entries()) {
       const row = worksheet.getRow(startRow + 1 + rowIndex);
       for (const [colIndex, col] of columns.entries()) {
         const cell = row.getCell(colIndex + 1);
+
         if (col.key === "no") {
           cell.value = rowIndex + 1;
-        } else if (col.key === "user_created") {
-          cell.value = item.user_created?.fullname;
-        } else if (col.key === "actual_qty") {
-          cell.value = Number((item as any)[col.key]);
-        } else if (col.key.includes("date")) {
-          cell.value = dayjs((item as any)[col.key]).format("DD/MM/YYYY");
         } else {
-          // Tell TypeScript to treat col.key as a key of Report
-          cell.value = (item as any)[col.key];
+          const value = item[col.key as keyof Incoming];
+
+          if (col.key === "delivery_date") {
+            cell.value = value
+              ? dayjs(value as Date).format("DD/MM/YYYY")
+              : "-";
+          } else {
+            cell.value = value ?? "-";
+          }
         }
 
-        // Assign cell alignment
-        if (col.key === "no" || col.key === "branch_number") {
+        // Alignment
+        if (
+          col.key === "no" ||
+          col.key === "branch_number" ||
+          col.key === "partial_number"
+        ) {
           cell.alignment = { vertical: "middle", horizontal: "center" };
-        } else if (col.key === "actual_qty") {
+        } else if (col.key === "schedule_qty" || col.key === "actual_qty") {
           cell.alignment = { vertical: "middle", horizontal: "right" };
         } else {
           cell.alignment = { vertical: "middle", horizontal: "left" };
         }
 
+        // Border
         cell.border = {
           top: { style: "thin" },
           left: { style: "thin" },
@@ -179,6 +147,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
           right: { style: "thin" },
         };
       }
+
       row.height = 20;
       row.commit();
     }
@@ -193,7 +162,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
       link.download =
-        "purchase_receipt_" + dayjs(new Date()).format("DDMMYYHHmm") + ".xlsx";
+        "incoming_" + dayjs(new Date()).format("DDMMYYHHmm") + ".xlsx";
       link.click();
     });
   };

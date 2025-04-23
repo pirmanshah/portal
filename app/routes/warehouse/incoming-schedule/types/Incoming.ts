@@ -1,0 +1,28 @@
+export type Incoming = {
+  order_number: string;
+  po_number?: string | null;
+  note?: string | null;
+  general_note?: string | null;
+  item_code: string;
+  item_name: string;
+  original_name: string;
+  lot_number: string | null;
+  maker_lot_number: string | null;
+  item_category: string;
+  branch_number: number;
+  partial_number: number;
+  schedule_qty: number;
+  actual_qty: number;
+  unit: string;
+  storage_location: string;
+  storage_location_name: string;
+  work_center: string;
+  work_center_name: string;
+  supplier: string;
+  supplier_name: string;
+  material_status: string | null;
+  grade: string | null;
+  color_index: string | null;
+  currency: string | null;
+  delivery_date: Date;
+};

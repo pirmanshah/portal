@@ -1,10 +1,8 @@
-import { Form } from "react-router";
 import { Button, Divider, Group } from "@mantine/core";
 import { IconPlus, IconRefresh, IconX } from "@tabler/icons-react";
 import { type MRT_Row, type MRT_TableInstance } from "mantine-react-table";
 
 import type { Incoming } from "../types/receipt.create.types";
-import { Download } from "./download-button";
 
 type ToolbarActionProps = {
   onClose: () => void;
@@ -45,11 +43,6 @@ export default function ToolbarIncoming({
       >
         Refresh
       </Button>
-      <Divider orientation="vertical" />
-      <Download
-        rows={table.getRowModel().rows}
-        disabled={table.getRowModel().rows.length === 0}
-      />
       <Divider orientation="vertical" />
       <Button
         size="xs"

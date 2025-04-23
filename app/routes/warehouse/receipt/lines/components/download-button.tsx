@@ -20,7 +20,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     worksheet.autoFilter = {
       from: { row: 7, column: 1 },
-      to: { row: 7, column: 24 },
+      to: { row: 7, column: 27 },
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 0, ySplit: 7 }];
@@ -71,6 +71,8 @@ export function Download({ rows, disabled = false }: DownloadProps) {
       { header: "BC No.", key: "custom_doc_number", width: 20 },
       { header: "BC Date", key: "custom_doc_date", width: 20 },
       { header: "PO No.", key: "po_number", width: 20 },
+      { header: "Supplier", key: "supplier", width: 15 },
+      { header: "Supplier Name", key: "supplier_name", width: 30 },
       { header: "Remarks", key: "remarks", width: 25 },
       { header: "General Pur. Note", key: "remark_general", width: 50 },
       { header: "Created Date", key: "created_at", width: 25 },
