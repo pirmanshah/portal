@@ -82,30 +82,12 @@ export function Table() {
             fixedDecimalScale
           />
         ),
-        Footer: ({ table }) => (
-          <Group
-            justify="space-between"
-            style={{ marginTop: -10, marginBottom: -10 }}
-          >
-            <Text fz={11.5} c="dimmed">
-              Total:
-            </Text>
-            <Text fz={11.5} c="dimmed">
-              <NumberFormatter
-                decimalScale={6}
-                fixedDecimalScale
-                value={table
-                  .getRowModel()
-                  .rows.reduce(
-                    (sum, item) =>
-                      Number(sum) + Number(item.original.actual_qty),
-                    0
-                  )}
-                thousandSeparator=","
-              />
-            </Text>
-          </Group>
-        ),
+      },
+      {
+        accessorKey: "unit",
+        filterVariant: "select",
+        columnFilterModeOptions: ["equals"],
+        header: "Unit",
       },
       {
         id: "completion_date",
@@ -150,9 +132,16 @@ export function Table() {
         accessorKey: "remarks",
         filterFn: "customFilterFn",
       },
+      {
+        accessorKey: "ng_type",
+        filterVariant: "select",
+        columnFilterModeOptions: ["equals"],
+        header: "NG Type",
+      },
     ],
     []
   );
+
   const table = useMantineReactTable({
     ...createTableOptions<InventoryList>(),
     data: data ?? [],
@@ -164,7 +153,6 @@ export function Table() {
     enableRowDragging: false,
     enableColumnResizing: false,
     enableRowVirtualization: true,
-    enableBottomToolbar: true,
     onColumnPinningChange: setColumnPinning,
     state: {
       columnPinning,
@@ -186,6 +174,46 @@ export function Table() {
         <MRT_ProgressBar table={table} isTopToolbar size="sm" />
       </Box>
     ),
+    enableBottomToolbar: true,
+    renderBottomToolbar: ({ table }) => {
+      const filteredRows = table.getFilteredRowModel().rows;
+      const totalQty = filteredRows.reduce(
+        (sum, row) => sum + Number(row.original.actual_qty),
+        0
+      );
+
+      return (
+        <Box
+          px="md"
+          pt="xs"
+          pb="md"
+          style={{ borderTop: "1px solid #eee", marginBottom: -12 }}
+        >
+          <Group justify="apart" gap="md" align="center">
+            <Group gap="xs">
+              <Text size="xs" c="dimmed">
+                Rows:
+              </Text>
+              <Text size="xs">{filteredRows.length}</Text>
+            </Group>
+
+            <Group gap="xs">
+              <Text size="xs" c="dimmed">
+                Total Qty:
+              </Text>
+              <Text size="xs">
+                <NumberFormatter
+                  value={totalQty}
+                  decimalScale={6}
+                  fixedDecimalScale
+                  thousandSeparator=","
+                />
+              </Text>
+            </Group>
+          </Group>
+        </Box>
+      );
+    },
   });
 
   return <MantineReactTable table={table} />;

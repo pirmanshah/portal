@@ -20,7 +20,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 }, // Mulai dari B7
-      to: { row: 7, column: 11 }, // Sampai O7
+      to: { row: 7, column: 13 }, // Sampai O7
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -63,9 +63,11 @@ export function Download({ rows, disabled = false }: DownloadProps) {
       { header: "Storage Location", key: "storage_location_name", width: 25 },
       { header: "Remaining Qty", key: "remaining_qty", width: 15 },
       { header: "Actual Qty", key: "actual_qty", width: 15 },
+      { header: "Unit", key: "unit", width: 15 },
       { header: "Completion Date", key: "completion_date", width: 20 },
       { header: "Expiration Date", key: "expiration_date", width: 20 },
       { header: "Remarks", key: "remarks", width: 30 },
+      { header: "NG Type", key: "ng_type", width: 30 },
     ];
 
     // Add table header manually

@@ -6,7 +6,7 @@ import {
   type MRT_ColumnPinningState,
 } from "mantine-react-table";
 import { useMemo, useState } from "react";
-import { Box, Group, NumberFormatter } from "@mantine/core";
+import { Box, Group, NumberFormatter, Text } from "@mantine/core";
 
 import TopToolbar from "./toolbar";
 import { useQueryData } from "../hooks/use-query";
@@ -50,23 +50,6 @@ export function Table() {
         header: "Storage Location",
       },
       {
-        id: "remaining_qty",
-        filterFn: "equals",
-        columnFilterModeOptions: ["equals"],
-        header: "Remaining Qty",
-        mantineTableBodyCellProps: {
-          align: "right",
-        },
-        accessorFn: (row) => (
-          <NumberFormatter
-            thousandSeparator
-            decimalScale={6}
-            fixedDecimalScale
-            value={row.remaining_qty}
-          />
-        ),
-      },
-      {
         id: "actual_qty",
         filterFn: "equals",
         columnFilterModeOptions: ["equals"],
@@ -82,6 +65,12 @@ export function Table() {
             fixedDecimalScale
           />
         ),
+      },
+      {
+        accessorKey: "unit",
+        filterVariant: "select",
+        columnFilterModeOptions: ["equals"],
+        header: "Unit",
       },
       {
         id: "completion_date",
@@ -158,6 +147,46 @@ export function Table() {
         <MRT_ProgressBar table={table} isTopToolbar size="sm" />
       </Box>
     ),
+    enableBottomToolbar: true,
+    renderBottomToolbar: ({ table }) => {
+      const filteredRows = table.getFilteredRowModel().rows;
+      const totalQty = filteredRows.reduce(
+        (sum, row) => sum + Number(row.original.actual_qty),
+        0
+      );
+
+      return (
+        <Box
+          px="md"
+          pt="xs"
+          pb="md"
+          style={{ borderTop: "1px solid #eee", marginBottom: -12 }}
+        >
+          <Group justify="apart" gap="md" align="center">
+            <Group gap="xs">
+              <Text size="xs" c="dimmed">
+                Rows:
+              </Text>
+              <Text size="xs">{filteredRows.length}</Text>
+            </Group>
+
+            <Group gap="xs">
+              <Text size="xs" c="dimmed">
+                Total Qty:
+              </Text>
+              <Text size="xs">
+                <NumberFormatter
+                  value={totalQty}
+                  decimalScale={6}
+                  fixedDecimalScale
+                  thousandSeparator=","
+                />
+              </Text>
+            </Group>
+          </Group>
+        </Box>
+      );
+    },
   });
 
   return <MantineReactTable table={table} />;
