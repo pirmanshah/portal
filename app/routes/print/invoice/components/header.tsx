@@ -8,7 +8,7 @@ export function InvoiceHeader({ data }: { data: Invoice }) {
       {/* Kolom Customer */}
       <div>
         <p className={styles.boldText}>
-          {data.customer_name} <br />
+          {data.customer_name} <br /> <br />
           {data.address_1} {data.address_2}
         </p>
       </div>

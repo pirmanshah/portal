@@ -20,7 +20,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 }, // Mulai dari B7
-      to: { row: 7, column: 30 }, // Sampai O7
+      to: { row: 7, column: 32 }, // Sampai O7
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -61,17 +61,42 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         width: 5,
       },
       {
-        header: "Transaction Date",
-        key: "transaction_date",
+        header: "Invoice No.",
+        key: "invoice_number",
         width: 15,
       },
       {
-        header: "Invoice Date",
+        header: "DO No.",
+        key: "del_order_number",
+        width: 15,
+      },
+      {
+        header: "DO Date",
         key: "issue_date",
         width: 15,
       },
       {
-        header: "Saler Order No.",
+        header: "Customer",
+        key: "customer_code",
+        width: 15,
+      },
+      {
+        header: "Name",
+        key: "customer_name",
+        width: 30,
+      },
+      {
+        header: "Item",
+        key: "item_code",
+        width: 30,
+      },
+      {
+        header: "Description",
+        key: "item_name",
+        width: 50,
+      },
+      {
+        header: "SO No.",
         key: "sales_order_number",
         width: 20,
       },
@@ -81,39 +106,65 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         width: 10,
       },
       {
-        header: "Delivery Order No.",
-        key: "del_order_number",
+        header: "Shipped Qty",
+        key: "shipped_qty",
         width: 15,
       },
       {
-        header: "Invoice No.",
-        key: "invoice_number",
+        header: "Unit",
+        key: "unit",
+        width: 10,
+      },
+      {
+        header: "Rate",
+        key: "rate",
         width: 15,
       },
       {
-        header: "Customer Code",
-        key: "customer_code",
+        header: "Currency",
+        key: "price_currency",
         width: 15,
       },
       {
-        header: "Customer Name",
-        key: "customer_name",
-        width: 30,
+        header: "Price",
+        key: "unit_price",
+        width: 15,
       },
       {
-        header: "Customer PO No.",
+        header: "Price USD",
+        key: "unit_price_usd",
+        width: 15,
+      },
+      {
+        header: "Amount",
+        key: "sales_amount",
+        width: 15,
+      },
+      {
+        header: "Amount USD",
+        key: "sales_amount_usd",
+        width: 15,
+      },
+      {
+        header: "PO No.",
         key: "customer_po",
         width: 30,
       },
       {
-        header: "Item Code",
-        key: "item_code",
-        width: 30,
+        header: "Invoice Date",
+        key: "issue_date",
+        width: 15,
       },
       {
-        header: "Item Description",
-        key: "item_name",
-        width: 50,
+        header: "AJU No.",
+        key: "aju_number",
+        width: 30,
+      },
+
+      {
+        header: "Transaction Date",
+        key: "transaction_date",
+        width: 15,
       },
       {
         header: "Resin Type",
@@ -151,31 +202,6 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         width: 20,
       },
       {
-        header: "Shipped Qty",
-        key: "shipped_qty",
-        width: 15,
-      },
-      {
-        header: "Price",
-        key: "unit_price",
-        width: 15,
-      },
-      {
-        header: "Price USD",
-        key: "unit_price_usd",
-        width: 15,
-      },
-      {
-        header: "Amount",
-        key: "sales_amount",
-        width: 15,
-      },
-      {
-        header: "Amount USD",
-        key: "sales_amount_usd",
-        width: 15,
-      },
-      {
         header: "VAT",
         key: "tax",
         width: 15,
@@ -186,24 +212,9 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         width: 15,
       },
       {
-        header: "Currency",
-        key: "price_currency",
-        width: 15,
-      },
-      {
         header: "Include VAT",
         key: "include_tax",
         width: 10,
-      },
-      {
-        header: "Rate",
-        key: "rate",
-        width: 15,
-      },
-      {
-        header: "AJU No.",
-        key: "aju_number",
-        width: 30,
       },
     ];
 

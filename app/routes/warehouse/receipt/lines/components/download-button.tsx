@@ -20,7 +20,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     worksheet.autoFilter = {
       from: { row: 7, column: 1 },
-      to: { row: 7, column: 27 },
+      to: { row: 7, column: 28 },
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 0, ySplit: 7 }];
@@ -65,6 +65,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
       { header: "Expiration Date", key: "expiration_date", width: 20 },
       { header: "Business Partner", key: "maker_lot_number", width: 20 },
       { header: "Arrival", key: "arrival_date", width: 25 },
+      { header: "Arrival Time", key: "arrival_time", width: 15 },
       { header: "Delivery Order Date", key: "delivery_order_date", width: 20 },
       { header: "Delivery Order No.", key: "delivery_order_number", width: 20 },
       { header: "BC Type", key: "custom_doc_type", width: 15 },
@@ -127,7 +128,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
           if (date) {
             const formatted = dayjs(date).format("DD-MM-YYYY");
             if (col.key === "arrival_date") {
-              cell.value = `${formatted}, ${item.arrival_time || ""}`;
+              cell.value = `${formatted}`;
             } else if (col.key === "created_at") {
               cell.value = dayjs(date).format("DD-MM-YYYY, hh:mm A");
             } else {

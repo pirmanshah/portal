@@ -4,6 +4,7 @@ export type InventoryList = {
   item_name: string;
   lot_number: string;
   unit: string;
+  bag_number: string;
   storage_location_name: string;
   remaining_qty: number;
   actual_qty: number;

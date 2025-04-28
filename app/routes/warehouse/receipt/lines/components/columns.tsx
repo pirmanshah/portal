@@ -134,7 +134,7 @@ export function generateColumns(): MRT_ColumnDef<ReceiptLine>[] {
       filterFn: "customFilterFn",
     },
     {
-      header: "Arrival",
+      header: "Arrival Date",
       id: "arrival_date",
       filterVariant: "date",
       columnFilterModeOptions: ["equals"],
@@ -144,10 +144,13 @@ export function generateColumns(): MRT_ColumnDef<ReceiptLine>[] {
         return rowValue?.toDateString() === filterDate?.toDateString();
       },
       accessorFn: (originalRow) => new Date(originalRow.arrival_date),
-      Cell: ({ cell, row }) =>
-        `${dayjs(cell.getValue<Date>()).format("DD-MM-YYYY")}, ${
-          row.original.arrival_time
-        }`,
+      Cell: ({ cell }) =>
+        `${dayjs(cell.getValue<Date>()).format("DD-MM-YYYY")}`,
+    },
+    {
+      header: "Arrival Time",
+      accessorKey: "arrival_time",
+      filterFn: "equals",
     },
     {
       header: "Delivery Order Date",

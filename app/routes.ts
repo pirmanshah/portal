@@ -81,6 +81,10 @@ export default [
         "routes/reports/sales-delivery/sales-delivery.tsx"
       ),
       route(
+        "/delivery-by-lot",
+        "routes/reports/delivery-by-lot/delivery-by-lot.tsx"
+      ),
+      route(
         "/purchase-receipt",
         "routes/reports/purchase-receipt/purchase-receipt.tsx"
       ),

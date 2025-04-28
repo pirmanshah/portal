@@ -8,10 +8,10 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import {
+  IconLock,
   IconLogout,
   IconUserCircle,
   IconChevronRight,
-  IconLock,
 } from "@tabler/icons-react";
 import { Link } from "react-router";
 import { useDisclosure } from "@mantine/hooks";

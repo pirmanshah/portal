@@ -3,6 +3,7 @@ export type InventoryList = {
   item_code: string;
   item_name: string;
   lot_number: string;
+  bag_number: string;
   ng_type: string;
   unit: string;
   storage_location_name: string;

@@ -133,6 +133,11 @@ export function Table() {
         filterFn: "customFilterFn",
       },
       {
+        accessorKey: "lot_number",
+        header: "Lot No.",
+        filterFn: "customFilterFn",
+      },
+      {
         accessorKey: "del_order_number",
         header: "DO No.",
         filterFn: "customFilterFn",
@@ -217,115 +222,6 @@ export function Table() {
         ),
       },
       {
-        id: "unit_price",
-        header: "Price",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            thousandSeparator
-            decimalScale={4}
-            fixedDecimalScale
-            value={row.unit_price}
-          />
-        ),
-      },
-      {
-        id: "unit_price_usd",
-        header: "Price USD",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            thousandSeparator
-            decimalScale={4}
-            fixedDecimalScale
-            value={row.unit_price_usd}
-          />
-        ),
-      },
-      {
-        id: "sales_amount",
-        header: "Amount",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            decimalScale={2}
-            thousandSeparator
-            fixedDecimalScale
-            value={row.sales_amount}
-          />
-        ),
-      },
-      {
-        id: "sales_amount_usd",
-        header: "Amount USD",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            decimalScale={2}
-            thousandSeparator
-            fixedDecimalScale
-            value={row.sales_amount_usd}
-          />
-        ),
-      },
-      {
-        id: "tax",
-        header: "VAT",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            decimalScale={2}
-            thousandSeparator
-            fixedDecimalScale
-            value={row.tax}
-          />
-        ),
-      },
-      {
-        id: "ttl_amount",
-        header: "Total Amount",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            decimalScale={2}
-            thousandSeparator
-            fixedDecimalScale
-            value={row.ttl_amount}
-          />
-        ),
-      },
-      {
-        header: "Currency",
-        filterFn: "equals",
-        filterVariant: "select",
-        accessorKey: "price_currency",
-      },
-      {
-        accessorKey: "include_tax",
-        header: "Include VAT",
-        filterVariant: "select",
-      },
-      {
-        id: "rate",
-        header: "Rate",
-        filterFn: "contains",
-        mantineTableBodyCellProps: { align: "right" },
-        accessorFn: (row) => (
-          <NumberFormatter
-            decimalScale={2}
-            thousandSeparator
-            fixedDecimalScale
-            value={row.rate ?? 0}
-          />
-        ),
-      },
-      {
         accessorKey: "aju_number",
         header: "AJU No.",
         filterFn: "contains",
@@ -373,7 +269,7 @@ export function Table() {
     renderTopToolbar: ({ table }) => (
       <Box pos="relative">
         <Group mt={-5} mb={2} justify="space-between">
-          <TitleTable title={`Sales Delivery 📋`} hideArrow={false} />
+          <TitleTable title={`Delivery by Lot 📋`} hideArrow={false} />
           <TopToolbar table={table} onRefresh={() => refetch()} />
         </Group>
         <MRT_ProgressBar table={table} isTopToolbar size="sm" />

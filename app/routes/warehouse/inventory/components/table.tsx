@@ -111,6 +111,11 @@ export function Table() {
         },
       },
       {
+        accessorKey: "bag_number",
+        filterFn: "customFilterFn",
+        header: "Bag No.",
+      },
+      {
         header: "Remarks",
         accessorKey: "remarks",
         filterFn: "customFilterFn",

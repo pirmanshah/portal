@@ -4,11 +4,11 @@ import * as ExcelJS from "exceljs";
 import { Button } from "@mantine/core";
 import { type MRT_Row } from "mantine-react-table";
 import { IconDownload } from "@tabler/icons-react";
-import type { InventoryList } from "../types/InventoryList";
+import type { SalesDelivery } from "../types/SalesDelivery";
 
 interface DownloadProps {
   disabled: boolean;
-  rows: MRT_Row<InventoryList>[];
+  rows: MRT_Row<SalesDelivery>[];
 }
 
 export function Download({ rows, disabled = false }: DownloadProps) {
@@ -16,11 +16,11 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
   const exportToExcel = async () => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet("Inventory");
+    const worksheet = workbook.addWorksheet("Data");
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 }, // Mulai dari B7
-      to: { row: 7, column: 14 }, // Sampai O7
+      to: { row: 7, column: 22 }, // Sampai O7
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -44,7 +44,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     worksheet.getCell("A5").value = "Export Date";
     worksheet.getCell("A5").alignment = { horizontal: "left" };
 
-    worksheet.getCell("C4").value = "Inventory"; // App name here
+    worksheet.getCell("C4").value = "Delivery by Lot"; // App name here
     worksheet.getCell("C4").border = { bottom: { style: "thin" } };
 
     worksheet.getCell("C5").value = dayjs(new Date()).format("DD MMMM YYYY"); // Export date here
@@ -55,20 +55,116 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     // Define columns manually
     const columns = [
-      { header: "No.", key: "no", width: 5 },
-      { header: "Order Number", key: "order_number", width: 20 },
-      { header: "Item Code", key: "item_code", width: 20 },
-      { header: "Item Name", key: "item_name", width: 25 },
-      { header: "Lot Number", key: "lot_number", width: 20 },
-      { header: "Storage Location", key: "storage_location_name", width: 25 },
-      { header: "Remaining Qty", key: "remaining_qty", width: 15 },
-      { header: "Actual Qty", key: "actual_qty", width: 15 },
-      { header: "Unit", key: "unit", width: 15 },
-      { header: "Completion Date", key: "completion_date", width: 20 },
-      { header: "Expiration Date", key: "expiration_date", width: 20 },
-      { header: "Bag No.", key: "bag_number", width: 20 },
-      { header: "Remarks", key: "remarks", width: 30 },
-      { header: "NG Type", key: "ng_type", width: 30 },
+      {
+        header: "No.",
+        key: "no",
+        width: 5,
+      },
+      {
+        header: "Transaction Date",
+        key: "transaction_date",
+        width: 15,
+      },
+      {
+        header: "Invoice Date",
+        key: "issue_date",
+        width: 15,
+      },
+      {
+        header: "Saler Order No.",
+        key: "sales_order_number",
+        width: 20,
+      },
+      {
+        header: "Branch No.",
+        key: "branch_number",
+        width: 10,
+      },
+      {
+        header: "Lot No.",
+        key: "lot_number",
+        width: 15,
+      },
+      {
+        header: "Delivery Order No.",
+        key: "del_order_number",
+        width: 15,
+      },
+      {
+        header: "Invoice No.",
+        key: "invoice_number",
+        width: 15,
+      },
+      {
+        header: "Customer Code",
+        key: "customer_code",
+        width: 15,
+      },
+      {
+        header: "Customer Name",
+        key: "customer_name",
+        width: 30,
+      },
+      {
+        header: "Customer PO No.",
+        key: "customer_po",
+        width: 30,
+      },
+      {
+        header: "Item Code",
+        key: "item_code",
+        width: 30,
+      },
+      {
+        header: "Item Description",
+        key: "item_name",
+        width: 50,
+      },
+      {
+        header: "Resin Type",
+        key: "resin_type",
+        width: 15,
+      },
+      {
+        header: "Maker",
+        key: "maker",
+        width: 20,
+      },
+      {
+        header: "Brand",
+        key: "brand",
+        width: 20,
+      },
+      {
+        header: "Grade",
+        key: "grade",
+        width: 20,
+      },
+      {
+        header: "Color Code",
+        key: "color_code",
+        width: 20,
+      },
+      {
+        header: "Color",
+        key: "color",
+        width: 20,
+      },
+      {
+        header: "End User",
+        key: "end_user",
+        width: 20,
+      },
+      {
+        header: "Shipped Qty",
+        key: "shipped_qty",
+        width: 15,
+      },
+      {
+        header: "AJU No.",
+        key: "aju_number",
+        width: 30,
+      },
     ];
 
     // Add table header manually
@@ -97,33 +193,51 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     // Add data rows manually
     for (const [rowIndex, item] of data.entries()) {
       const row = worksheet.getRow(startRow + 1 + rowIndex);
+      const isNegative = item.red_slip;
+
       for (const [colIndex, col] of columns.entries()) {
         const cell = row.getCell(colIndex + 1);
-
         if (col.key === "no") {
           cell.value = rowIndex + 1;
+        } else if (
+          col.key === "shipped_qty" ||
+          col.key === "unit_price" ||
+          col.key === "tax"
+        ) {
+          cell.value = Number((item as any)[col.key]);
+        } else if (col.key.includes("date")) {
+          cell.value = dayjs((item as any)[col.key]).format("DD/MM/YYYY");
         } else {
-          const value = item[col.key as keyof InventoryList];
-
-          if (col.key === "completion_date" || col.key === "expiration_date") {
-            cell.value = value
-              ? dayjs(value as Date).format("DD/MM/YYYY")
-              : "-";
-          } else {
-            cell.value = value ?? "-";
-          }
+          // Tell TypeScript to treat col.key as a key of Report
+          cell.value = (item as any)[col.key];
         }
 
-        // Alignment
-        if (col.key === "no") {
+        // Assign cell alignment
+        if (
+          col.key === "no" ||
+          col.key === "branch_number" ||
+          col.key === "include_tax" ||
+          col.key === "price_currency"
+        ) {
           cell.alignment = { vertical: "middle", horizontal: "center" };
-        } else if (col.key === "remaining_qty" || col.key === "actual_qty") {
+        } else if (
+          col.key === "shipped_qty" ||
+          col.key === "unit_price" ||
+          col.key === "tax"
+        ) {
           cell.alignment = { vertical: "middle", horizontal: "right" };
         } else {
           cell.alignment = { vertical: "middle", horizontal: "left" };
         }
 
-        // Border
+        if (isNegative) {
+          cell.fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: "FFF0F0" }, // light pink
+          };
+        }
+
         cell.border = {
           top: { style: "thin" },
           left: { style: "thin" },
@@ -131,7 +245,6 @@ export function Download({ rows, disabled = false }: DownloadProps) {
           right: { style: "thin" },
         };
       }
-
       row.height = 20;
       row.commit();
     }
@@ -146,7 +259,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
       link.download =
-        "inventory_" + dayjs(new Date()).format("DDMMYYHHmm") + ".xlsx";
+        "delivery_lot_" + dayjs(new Date()).format("DDMMYYHHmm") + ".xlsx";
       link.click();
     });
   };
