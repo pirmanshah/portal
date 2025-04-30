@@ -20,7 +20,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 }, // Mulai dari B7
-      to: { row: 7, column: 32 }, // Sampai O7
+      to: { row: 7, column: 33 }, // Sampai O7
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -215,6 +215,11 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         header: "Include VAT",
         key: "include_tax",
         width: 10,
+      },
+      {
+        header: "Delivery Code",
+        key: "delivery_code",
+        width: 15,
       },
     ];
 

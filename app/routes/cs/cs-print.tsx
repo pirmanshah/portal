@@ -36,4 +36,10 @@ const automations = [
     color: "indigo",
     link: "/print/packing",
   },
+  {
+    title: "Credit Note",
+    icon: "IconNotes",
+    color: "red",
+    link: "/print/credit-note",
+  },
 ];

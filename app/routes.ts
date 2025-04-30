@@ -70,6 +70,7 @@ export default [
         route("/invoice", "routes/print/invoice/invoice.tsx"),
         route("/delivery", "routes/print/delivery/delivery.tsx"),
         route("/packing", "routes/print/packing/packing.tsx"),
+        route("/credit-note", "routes/print/credit-note/credit-note.tsx"),
       ]),
     ]),
 

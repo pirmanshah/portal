@@ -29,4 +29,5 @@ export interface SalesDelivery {
   aju_number: string | null;
   rate: number | null;
   red_slip: boolean;
+  delivery_code: string;
 }

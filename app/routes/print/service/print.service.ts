@@ -28,3 +28,16 @@ export async function getInvoice(): Promise<Invoice[]> {
 
   return response.data;
 }
+
+export async function getCreditNote(): Promise<Invoice[]> {
+  const response = await fetchWithCredential<Invoice[]>(
+    `${API_URL}/print/credit-note`,
+    "GET"
+  );
+
+  if (!response.success || !response.data) {
+    throw new Error(response.message);
+  }
+
+  return response.data;
+}

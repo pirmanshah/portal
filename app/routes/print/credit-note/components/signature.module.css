@@ -1,0 +1,39 @@
+.container {
+  font-size: 14px;
+}
+
+.ttl_section {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  border: 1px dashed #171711;
+  border-left: none;
+  border-right: none;
+}
+
+.margin {
+  margin-bottom: 60px;
+}
+
+.grid {
+  gap: 1rem;
+  display: grid;
+  text-align: left;
+  grid-template-columns: 1fr 1fr 1.9fr;
+}
+
+.sectionHeader {
+  border-bottom: 1px solid black;
+  padding-bottom: 4px;
+}
+
+.signatureLine {
+  margin-top: 1.5rem;
+  border-bottom: 1px solid black;
+  padding-top: 4px;
+}
+
+.notes {
+  font-size: 10px;
+  text-align: left;
+}

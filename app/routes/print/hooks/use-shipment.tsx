@@ -1,6 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import type { ShipmentGroup } from "../types/shipment";
-import { getInvoice, getShipment } from "../service/print.service";
+import {
+  getCreditNote,
+  getInvoice,
+  getShipment,
+} from "../service/print.service";
 import type { Invoice } from "../types/invoice";
 
 const QUERY_KEY = "print-shipment";
@@ -16,5 +20,12 @@ export function useInvoiceQuery() {
   return useQuery<Invoice[]>({
     queryKey: ["print-invoice"],
     queryFn: async () => getInvoice(),
+  });
+}
+
+export function useCreditNoteQuery() {
+  return useQuery<Invoice[]>({
+    queryKey: ["print-credit-note"],
+    queryFn: async () => getCreditNote(),
   });
 }
