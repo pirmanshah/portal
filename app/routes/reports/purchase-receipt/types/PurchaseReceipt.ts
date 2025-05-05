@@ -35,6 +35,7 @@ export type PurchaseReceipt = {
   aju_number: string | null;
   packing_slip: number | null;
   price: number | null;
+  tax: number | null;
   created_by: string;
   updated_by: string | null;
   po_number: string | null;

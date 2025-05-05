@@ -105,6 +105,22 @@ export function Table() {
         ),
       },
       {
+        id: "tax",
+        header: "VAT",
+        filterFn: "equals",
+        mantineTableBodyCellProps: {
+          align: "right",
+        },
+        accessorFn: (row) => (
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={2}
+            fixedDecimalScale
+            value={row.tax as any}
+          />
+        ),
+      },
+      {
         header: "Packing Slip",
         accessorKey: "packing_slip",
         filterFn: "customFilterFn",
