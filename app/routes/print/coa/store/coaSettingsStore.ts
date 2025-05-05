@@ -41,6 +41,29 @@ export const useCoaSettingsStore = create<CoaSettingsState>()(
     }),
     {
       name: "coa-settings-storage",
+      // Tambahkan ini:
+      merge: (persistedState, currentState) => {
+        const state = {
+          ...currentState,
+          ...(persistedState as any),
+        };
+
+        const settings = state.settings ?? {};
+        return {
+          ...state,
+          settings: {
+            ...defaultCoaSetting,
+            ...settings,
+            date: settings.date ? new Date(settings.date) : null,
+            preparedDate: settings.preparedDate
+              ? new Date(settings.preparedDate)
+              : null,
+            approvedDate: settings.approvedDate
+              ? new Date(settings.approvedDate)
+              : null,
+          },
+        };
+      },
     }
   )
 );
