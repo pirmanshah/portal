@@ -37,6 +37,12 @@ const automations = [
     link: "/print/packing",
   },
   {
+    title: "COA Material",
+    icon: "IconCertificate",
+    color: "yellow",
+    link: "/print/coa",
+  },
+  {
     title: "Credit Note",
     icon: "IconNotes",
     color: "red",

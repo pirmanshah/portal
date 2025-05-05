@@ -105,9 +105,10 @@ export function Download({ rows, disabled = false }: DownloadProps) {
           const value = item[col.key as keyof InventoryList];
 
           if (col.key === "completion_date" || col.key === "expiration_date") {
-            cell.value = value
-              ? dayjs(value as Date).format("DD/MM/YYYY")
-              : "-";
+            const rawValue = (item as any)[col.key];
+            const parsedDate = rawValue ? new Date(rawValue) : null;
+            cell.value = parsedDate;
+            cell.numFmt = "dd/mm/yyyy"; // Atur format tampilannya
           } else {
             cell.value = value ?? "-";
           }

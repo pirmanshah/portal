@@ -29,12 +29,6 @@ export function generateColumns(): MRT_ColumnDef<ShipmentGroup>[] {
       columnFilterModeOptions: ["equals"],
     },
     {
-      header: "PL Number",
-      filterVariant: "select",
-      accessorKey: "pl_number",
-      columnFilterModeOptions: ["equals"],
-    },
-    {
       header: "Customer Code",
       accessorKey: "customer_code",
       filterVariant: "select",
@@ -58,20 +52,22 @@ export function generateColumns(): MRT_ColumnDef<ShipmentGroup>[] {
 export function generateChildColumns(): MRT_ColumnDef<ShipmentItem>[] {
   return [
     {
-      header: "DO Number",
-      accessorKey: "order_number",
+      header: "Resin",
+      accessorKey: "resin",
       filterVariant: "select",
       columnFilterModeOptions: ["equals"],
     },
     {
-      header: "Item Code",
-      accessorKey: "item_code",
-      filterVariant: "select",
-      columnFilterModeOptions: ["equals"],
+      header: "Color Code",
+      accessorKey: "color_code",
     },
     {
-      header: "Item Name",
-      accessorKey: "item_name",
+      header: "Color",
+      accessorKey: "color",
+    },
+    {
+      header: "Lot No.",
+      accessorKey: "lot_number",
     },
     {
       header: "Qty Delivery",
@@ -89,56 +85,20 @@ export function generateChildColumns(): MRT_ColumnDef<ShipmentItem>[] {
       ),
     },
     {
-      header: "Unit",
-      accessorKey: "unit",
+      header: "DO Number",
+      accessorKey: "order_number",
       filterVariant: "select",
       columnFilterModeOptions: ["equals"],
     },
     {
-      header: "Bags",
-      accessorKey: "bags",
-    },
-    {
-      header: "Lot Number",
-      accessorKey: "lot_number",
-    },
-    {
-      header: "Color",
-      accessorKey: "color",
+      header: "Item Code",
+      accessorKey: "item_code",
       filterVariant: "select",
       columnFilterModeOptions: ["equals"],
     },
     {
-      header: "Sales Order No.",
-      filterVariant: "select",
-      accessorKey: "sales_order_number",
-      columnFilterModeOptions: ["equals"],
-    },
-    {
-      header: "Branch No.",
-      accessorKey: "branch_number",
-    },
-    {
-      header: "Unit Price",
-      accessorKey: "unit_price",
-      accessorFn: (row) => (
-        <NumberFormatter thousandSeparator value={row.unit_price} />
-      ),
-    },
-    {
-      header: "Amount",
-      accessorKey: "amount",
-      accessorFn: (row) => (
-        <NumberFormatter thousandSeparator value={row.amount} />
-      ),
-    },
-    {
-      header: "Note",
-      accessorKey: "note",
-    },
-    {
-      header: "Currency",
-      accessorKey: "currency",
+      header: "Item Name",
+      accessorKey: "item_name",
     },
   ];
 }

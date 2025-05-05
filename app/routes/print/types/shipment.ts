@@ -17,6 +17,9 @@ export type ShipmentItem = {
   note: string;
   currency: string;
   pl_number: string;
+  customer_note: string;
+  resin: string;
+  color_code: string;
 };
 
 export type ShipmentGroup = {

@@ -125,7 +125,10 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         ) {
           cell.value = Number((item as any)[col.key]);
         } else if (col.key.includes("date")) {
-          cell.value = dayjs((item as any)[col.key]).format("DD/MM/YYYY");
+          const rawValue = (item as any)[col.key];
+          const parsedDate = rawValue ? new Date(rawValue) : null;
+          cell.value = parsedDate;
+          cell.numFmt = "dd/mm/yyyy"; // Atur format tampilannya
         } else {
           // Tell TypeScript to treat col.key as a key of Report
           cell.value = (item as any)[col.key];

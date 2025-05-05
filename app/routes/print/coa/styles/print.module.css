@@ -1,0 +1,209 @@
+.container {
+  background: #ffff !important;
+  background-color: #ffff !important;
+  color: black !important;
+  position: relative;
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  page-break-before: always;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.header {
+  width: 100%;
+  margin-top: 35px;
+  display: flex;
+  padding-left: 27px;
+  padding-right: 27px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.company {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.logo {
+  height: 75px;
+}
+
+.companyInfo {
+}
+
+.companyInfoTitle {
+  color: black;
+  font-size: 15px;
+  margin-bottom: -12px;
+}
+
+.companyInfoDesc {
+  color: black;
+  font-size: 9px;
+}
+
+.header_table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  background: #ffff;
+}
+
+.header_row {
+}
+
+.header_headerCell {
+  width: 100px;
+  color: black;
+  font-size: 8px;
+  padding: 2px;
+  text-align: left;
+  background: #ffff;
+  border: 1px solid #000;
+}
+
+.header_dataCell {
+  width: 100px;
+  color: black;
+  font-size: 8px;
+  padding: 2px;
+  text-align: left;
+  background: #ffff;
+  border: 1px solid #000;
+}
+
+.title {
+  text-align: center;
+  margin-top: 6px;
+  color: black;
+  font-size: 17px;
+}
+
+.text {
+  margin-left: 30px;
+  margin-top: 6px;
+  color: black;
+  font-size: 12.5px;
+}
+
+.main_content {
+  padding-left: 27px;
+  padding-right: 27px;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+  background: #ffff;
+}
+
+.row {
+}
+
+.headerCell {
+  width: 100px;
+  color: black;
+  font-size: 11.5px;
+  font-weight: lighter;
+  padding: 2px 20px;
+  text-align: left;
+  background: #ffff;
+  border: 1px solid #000;
+}
+
+.dataCell {
+  width: 100px;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 20px;
+  text-align: left;
+  background: #ffff;
+  border: 1px solid #000;
+}
+
+.blankHeaderCell {
+  width: 100px;
+  height: 410px;
+  text-align: left;
+  background: #ffff;
+  border-left: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.blankDataCell {
+  width: 100px;
+  height: 410px;
+  background: #ffff;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.hpmNote {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  top: 685px;
+  left: 50%;
+  transform: translateX(-50%);
+  gap: 45px;
+}
+
+.note {
+  position: absolute;
+  text-align: center;
+  top: 740px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.defaultNote {
+  margin-top: -10px;
+  padding-left: 27px;
+  color: black;
+  font-size: 15px;
+}
+
+.approval {
+  padding: 0 30px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.approvalBox {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  justify-content: center;
+  width: 180px;
+}
+
+.approvalTitle {
+  text-align: center;
+  color: black;
+  font-size: 13px;
+}
+
+.approvalLine {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid black;
+}
+
+.approvalText {
+  color: black;
+  font-size: 13px;
+  padding-top: 2px;
+}

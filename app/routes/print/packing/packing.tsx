@@ -232,7 +232,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                         <tbody>
                           {pageItems.map(
                             (item: ShipmentItem, index: number) => (
-                              <tr key={index}>
+                              <tr key={index} style={{ padding: 0, margin: 0 }}>
                                 <td
                                   style={{ width: 15, padding: 0, margin: 0 }}
                                 >
@@ -246,11 +246,11 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                     }}
                                   />
                                 </td>
-                                <td style={{ lineHeight: 1 }}>
+                                <td style={{ lineHeight: 1, margin: 0 }}>
                                   <p style={{ margin: 0 }}>{item.item_code}</p>
                                   <p style={{ margin: 0 }}>{item.item_name}</p>
                                 </td>
-                                <td style={{ textAlign: "right" }}>
+                                <td style={{ textAlign: "right", margin: 0 }}>
                                   <NumberFormatter
                                     decimalScale={2}
                                     fixedDecimalScale
@@ -259,7 +259,7 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                   />{" "}
                                   {item.unit ? item.unit.toLowerCase() : "kg"}
                                 </td>
-                                <td style={{ textAlign: "right" }}>
+                                <td style={{ textAlign: "right", margin: 0 }}>
                                   <NumberFormatter
                                     decimalScale={2}
                                     fixedDecimalScale
