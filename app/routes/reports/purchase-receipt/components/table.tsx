@@ -89,6 +89,22 @@ export function Table() {
         filterFn: "customFilterFn",
       },
       {
+        id: "price",
+        header: "Price",
+        filterFn: "equals",
+        mantineTableBodyCellProps: {
+          align: "right",
+        },
+        accessorFn: (row) => (
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={2}
+            fixedDecimalScale
+            value={row.price as any}
+          />
+        ),
+      },
+      {
         header: "Packing Slip",
         accessorKey: "packing_slip",
         filterFn: "customFilterFn",
