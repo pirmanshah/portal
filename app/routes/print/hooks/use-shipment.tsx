@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import type { ShipmentGroup } from "../types/shipment";
 import {
-  getCreditNote,
   getInvoice,
   getShipment,
+  getCreditNote,
 } from "../service/print.service";
 import type { Invoice } from "../types/invoice";
 
