@@ -20,7 +20,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 },
-      to: { row: 7, column: 27 },
+      to: { row: 7, column: 28 },
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -72,6 +72,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
       { header: "BC Type", key: "custom_doc_type", width: 15 },
       { header: "BC No.", key: "custom_doc_number", width: 20 },
       { header: "BC Date", key: "custom_doc_date", width: 20 },
+      { header: "Price", key: "price", width: 15 },
       { header: "PO No.", key: "po_number", width: 20 },
       { header: "Supplier", key: "supplier", width: 15 },
       { header: "Supplier Name", key: "supplier_name", width: 30 },
@@ -113,7 +114,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
         if (col.key === "no") {
           cell.value = index + 1;
-        } else if (["actual_qty"].includes(col.key)) {
+        } else if (["actual_qty", "price"].includes(col.key)) {
           cell.value = Number(item[col.key as keyof PurchaseReceipt]) || 0;
         } else if (
           [
@@ -156,7 +157,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         }
 
         cell.alignment = { vertical: "middle", horizontal: "left" };
-        if (col.key === "actual_qty") {
+        if (col.key === "actual_qty" || col.key === "price") {
           cell.alignment.horizontal = "right";
         } else if (col.key === "no") {
           cell.alignment.horizontal = "center";
