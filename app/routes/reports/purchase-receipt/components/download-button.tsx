@@ -20,7 +20,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 },
-      to: { row: 7, column: 29 },
+      to: { row: 7, column: 30 },
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -74,10 +74,11 @@ export function Download({ rows, disabled = false }: DownloadProps) {
       { header: "BC Date", key: "custom_doc_date", width: 20 },
       { header: "Price", key: "price", width: 15 },
       { header: "VAT", key: "tax", width: 15 },
+      { header: "Amount", key: "amount", width: 15 },
       { header: "PO No.", key: "po_number", width: 20 },
+      { header: "Remarks", key: "remarks", width: 25 },
       { header: "Supplier", key: "supplier", width: 15 },
       { header: "Supplier Name", key: "supplier_name", width: 30 },
-      { header: "Remarks", key: "remarks", width: 25 },
       { header: "General Pur. Note", key: "remark_general", width: 50 },
       { header: "Created Date", key: "created_at", width: 25 },
       { header: "Created By", key: "user_created", width: 25 },
@@ -115,7 +116,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
         if (col.key === "no") {
           cell.value = index + 1;
-        } else if (["actual_qty", "price", "tax"].includes(col.key)) {
+        } else if (["actual_qty", "price", "tax", "amount"].includes(col.key)) {
           cell.value = Number(item[col.key as keyof PurchaseReceipt]) || 0;
         } else if (
           [
@@ -161,7 +162,8 @@ export function Download({ rows, disabled = false }: DownloadProps) {
         if (
           col.key === "actual_qty" ||
           col.key === "price" ||
-          col.key === "tax"
+          col.key === "tax" ||
+          col.key === "amount"
         ) {
           cell.alignment.horizontal = "right";
         } else if (col.key === "no") {

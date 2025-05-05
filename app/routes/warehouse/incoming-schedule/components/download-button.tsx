@@ -20,7 +20,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
 
     worksheet.autoFilter = {
       from: { row: 7, column: 2 },
-      to: { row: 7, column: 27 },
+      to: { row: 7, column: 28 },
     };
 
     worksheet.views = [{ state: "frozen", xSplit: 4, ySplit: 7 }];
@@ -56,6 +56,7 @@ export function Download({ rows, disabled = false }: DownloadProps) {
     // Define columns manually
     const columns = [
       { header: "No.", key: "no", width: 5 },
+      { header: "Item Type", key: "pattern", width: 15 },
       { header: "Order Number", key: "order_number", width: 20 },
       { header: "PO No.", key: "po_number", width: 20 },
       { header: "General Note", key: "general_note", width: 20 },

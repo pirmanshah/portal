@@ -39,6 +39,12 @@ export default function IncomingTable({
         Cell: ({ cell }) => dayjs(cell.getValue<Date>()).format("DD-MM-YYYY"),
       },
       {
+        accessorKey: "pattern",
+        filterVariant: "select",
+        header: "Item Type",
+        filterFn: "equals",
+      },
+      {
         accessorFn: (originalRow) => {
           const itemCode = originalRow.item_code;
           return itemCode?.startsWith("L", 0) ? "S-IK 2" : "S-IK 1";

@@ -121,6 +121,22 @@ export function Table() {
         ),
       },
       {
+        id: "amount",
+        header: "Amount",
+        filterFn: "equals",
+        mantineTableBodyCellProps: {
+          align: "right",
+        },
+        accessorFn: (row) => (
+          <NumberFormatter
+            thousandSeparator
+            decimalScale={2}
+            fixedDecimalScale
+            value={row.amount as any}
+          />
+        ),
+      },
+      {
         header: "Packing Slip",
         accessorKey: "packing_slip",
         filterFn: "customFilterFn",
@@ -226,6 +242,11 @@ export function Table() {
         filterFn: "customFilterFn",
       },
       {
+        header: "Remarks",
+        accessorKey: "remarks",
+        filterFn: "customFilterFn",
+      },
+      {
         accessorKey: "supplier",
         header: "Supplier",
         filterFn: "equals",
@@ -236,11 +257,7 @@ export function Table() {
         header: "Supplier Name",
         filterFn: "customFilterFn",
       },
-      {
-        header: "Remarks",
-        accessorKey: "remarks",
-        filterFn: "customFilterFn",
-      },
+
       {
         header: "General Pur. Note",
         accessorKey: "remark_general",

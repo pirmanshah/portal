@@ -44,7 +44,7 @@ export type PurchaseReceipt = {
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
-
+  amount: number;
   user_created: {
     fullname: string;
   };

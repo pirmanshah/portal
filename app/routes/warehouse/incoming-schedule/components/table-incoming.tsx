@@ -38,6 +38,12 @@ export default function IncomingTable() {
         Cell: ({ cell }) => dayjs(cell.getValue<Date>()).format("DD-MM-YYYY"),
       },
       {
+        accessorKey: "pattern",
+        filterVariant: "select",
+        header: "Item Type",
+        filterFn: "equals",
+      },
+      {
         size: 120,
         accessorFn: (originalRow) => {
           const itemCode = originalRow.item_code;

@@ -36,6 +36,7 @@ export type ReceiptCreate = {
 };
 
 export type Incoming = {
+  pattern: string;
   order_number: string;
   po_number?: string | null;
   note?: string | null;
