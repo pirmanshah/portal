@@ -23,6 +23,7 @@ export default function ProductionOrderTable({
   const columns = useMemo<MRT_ColumnDef<ProductionOrder>[]>(
     () => [
       {
+        size: 115,
         accessorFn: (originalRow) => {
           const itemCode = originalRow?.item_code;
           return itemCode
@@ -38,6 +39,7 @@ export default function ProductionOrderTable({
         filterFn: "equals",
         columnFilterModeOptions: ["equals"],
         mantineFilterSelectProps: {
+          w: 50,
           data: ["S-IK 1", "S-IK 2"],
         },
         Cell: ({ row }) => {
@@ -50,9 +52,22 @@ export default function ProductionOrderTable({
         },
       },
       {
+        size: 115,
         accessorKey: "cpwi_number",
         filterFn: "customFilterFn",
-        header: "CPWI No.",
+        header: "CPWI",
+      },
+      {
+        size: 110,
+        accessorKey: "branch_order",
+        filterFn: "equals",
+        header: "Branch",
+        mantineTableBodyCellProps: {
+          align: "center",
+        },
+        Cell: ({ cell }) => (
+          <NumberFormatter thousandSeparator value={cell.getValue() as any} />
+        ),
       },
       {
         accessorKey: "item_code",
@@ -60,14 +75,16 @@ export default function ProductionOrderTable({
         header: "Item Code",
       },
       {
+        size: 280,
         header: "Item Name",
         accessorKey: "item_name",
         filterFn: "customFilterFn",
       },
       {
+        size: 115,
         id: "qty_to_move",
         filterFn: "equals",
-        header: "Qty to move",
+        header: "Qty",
         columnFilterModeOptions: ["equals"],
         mantineTableBodyCellProps: {
           align: "right",
@@ -82,6 +99,7 @@ export default function ProductionOrderTable({
         ),
       },
       {
+        size: 105,
         header: "Move to",
         accessorKey: "move_to",
         filterFn: "customFilterFn",
