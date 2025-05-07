@@ -58,7 +58,7 @@ export default function ProductionOrderTable({
         header: "CPWI",
       },
       {
-        size: 110,
+        size: 115,
         accessorKey: "branch_order",
         filterFn: "equals",
         header: "Branch",
