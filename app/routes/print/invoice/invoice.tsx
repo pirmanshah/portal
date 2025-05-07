@@ -215,7 +215,17 @@ const PrintableContent = forwardRef<HTMLDivElement, PrintableContentProps>(
                                 <td style={{ lineHeight: 1, fontSize: 14 }}>
                                   {item.item_name} <br />
                                   <strong>PO : </strong>
-                                  {item.order_number}
+                                  <span
+                                    style={{
+                                      lineHeight: 1,
+                                      fontSize:
+                                        item?.order_number.length > 24
+                                          ? 13
+                                          : 14,
+                                    }}
+                                  >
+                                    {item.order_number}
+                                  </span>
                                 </td>
                                 <td style={{ lineHeight: 1, fontSize: 14 }}>
                                   {item.item_code} <br /> /{item.color}

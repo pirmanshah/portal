@@ -52,6 +52,7 @@ export function generateColumns(): MRT_ColumnDef<ShipmentGroup>[] {
 export function generateChildColumns(): MRT_ColumnDef<ShipmentItem>[] {
   return [
     {
+      size: 300,
       header: "DO Number",
       accessorKey: "order_number",
       filterVariant: "select",
@@ -64,6 +65,7 @@ export function generateChildColumns(): MRT_ColumnDef<ShipmentItem>[] {
       columnFilterModeOptions: ["equals"],
     },
     {
+      size: 300,
       header: "Item Name",
       accessorKey: "item_name",
     },
